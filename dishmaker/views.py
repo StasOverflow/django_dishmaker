@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 
 from django.http import HttpResponse
 
+from django.views.generic import TemplateView
 
-def index(request):
-    return render(request, 'posts/index.html') # , context={"posts": Post.objects.all()})
+
+class IndexView(TemplateView):
+    template_name = "dishmaker/index.html"

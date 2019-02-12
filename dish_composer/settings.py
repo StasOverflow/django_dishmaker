@@ -121,6 +121,9 @@ CSRF_COOKIE_DOMAIN = '127.0.0.1'
 
 STATIC_URL = '/static/'
 
+# A path to a directory for ./manage.py collectstatic
+STATIC_ROOT = 'assets/'
+
 try:
     from .settings_local import *
 except ImportError as e:
