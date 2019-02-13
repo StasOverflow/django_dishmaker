@@ -27,6 +27,7 @@ class IndexView(ListView, BaseKindaAbstractView):
         context['title'] = self.title
         # prefetch_related is like select_related, but for many to many cases
         recipes = DishRecipe.objects.prefetch_related('ingredients').all()
+        # ingredients =
         context['recipes'] = recipes
         return context
 
