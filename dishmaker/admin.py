@@ -1,21 +1,25 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import DishRecipe, Ingredient, Order
+from .models import DishRecipe, Ingredient, Order, IngredientQuantityInDishProxy
+
+
+class DishRecipeIngredientInline(admin.TabularInline):
+    model = DishRecipe.ingredients.through
+    verbose_name = 'Ingredient to your recipe'
+    fields = ['ingredient_id', 'ingredient_quantity', ]
+    extra = 1
 
 
 class DishAdmin(admin.ModelAdmin):
-    # exclude = ('updated_on',)
-    # list_display = ('title', 'created_on',)
-    # list_filter = ('created_on', 'title', )
-    list_display = ('name', )
+    inlines = [
+        DishRecipeIngredientInline,
+    ]
+    list_display = ('name', 'description')
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('name', )
-    # exclude = ('meta_keywords',)
-    # list_display = ('name', 'is_active', 'description')
-    # list_filter = ('description', 'name', )
+    list_display = ('name', 'description')
 
 
 admin.site.register(DishRecipe, DishAdmin)
