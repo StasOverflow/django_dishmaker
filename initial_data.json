@@ -152,6 +152,14 @@
   }
 },
 {
+  "model": "dishmaker.dishrecipe",
+  "pk": 8,
+  "fields": {
+    "name": "Govyadina",
+    "description": "da, eto ona"
+  }
+},
+{
   "model": "dishmaker.ingredientquantityindishproxy",
   "pk": 1,
   "fields": {
@@ -283,6 +291,33 @@
   "fields": {
     "ingredient_id": 12,
     "dishrecipe_id": 2,
+    "ingredient_quantity": 1
+  }
+},
+{
+  "model": "dishmaker.ingredientquantityindishproxy",
+  "pk": 20,
+  "fields": {
+    "ingredient_id": 6,
+    "dishrecipe_id": 8,
+    "ingredient_quantity": 1
+  }
+},
+{
+  "model": "dishmaker.ingredientquantityindishproxy",
+  "pk": 21,
+  "fields": {
+    "ingredient_id": 11,
+    "dishrecipe_id": 8,
+    "ingredient_quantity": 2
+  }
+},
+{
+  "model": "dishmaker.ingredientquantityindishproxy",
+  "pk": 22,
+  "fields": {
+    "ingredient_id": 6,
+    "dishrecipe_id": 8,
     "ingredient_quantity": 1
   }
 }

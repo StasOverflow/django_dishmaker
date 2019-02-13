@@ -39,7 +39,7 @@ class IngredientQuantityInDishProxy(models.Model):
     ingredient_id = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
                                       related_name='IngredientQuantityInDishProxy',
                                       null=False)
-    dishrecipe_id = models.ForeignKey(DishRecipe, on_delete=models.CASCADE)
+    dishrecipe_id = models.ForeignKey(DishRecipe, related_name='dishrecipe', on_delete=models.CASCADE)
     ingredient_quantity = models.IntegerField(
                             default=0,
                             validators=[

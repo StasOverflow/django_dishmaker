@@ -21,10 +21,8 @@
                 <p> {{dish_recipe.description}} </p>
                 <h5> Consists of: </h5>
                 <ul style="list-style-type:circle;">
-                    {% for ing in dish_recipe.ingredients.all %}
-                        {% for ingred in ing.IngredientQuantityInDishProxy.filter(dishrecipe_id=dish_recipe.id) %}
-                        <li> {{ingred.ingredient_id}} : {{ingred.ingredient_quantity}} </li>
-                        {% endfor %}
+                    {% for ing in dish_recipe.dishrecipe.all %}
+                        <li> {{ing.ingredient_id}} : {{ing.ingredient_quantity}} </li>
                     {% endfor %}
                 </ul>
             </div><!-- /.blog-post -->
