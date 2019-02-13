@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Dish, Ingredient, Order
+from .models import DishRecipe, Ingredient, Order
 
 
 class DishAdmin(admin.ModelAdmin):
@@ -18,5 +18,5 @@ class IngredientAdmin(admin.ModelAdmin):
     # list_filter = ('description', 'name', )
 
 
-admin.site.register(Dish, DishAdmin)
+admin.site.register(DishRecipe, DishAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
