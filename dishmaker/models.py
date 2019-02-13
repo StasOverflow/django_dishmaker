@@ -2,9 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-# TODO: add a decorator, that replaces given classes __str__ method to its own. (to avoid code duplication)
-# No clue how to make it
-
 class Order(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(blank=True)
@@ -16,10 +13,6 @@ class Order(models.Model):
 
 
 class Ingredient(models.Model):
-    """
-        I think this one is ment to be used for basic purposes, such as adding|deliting as is
-        IMO this is possible, but requires additional amount of work
-    """
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(blank=True)
     # person_id = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='Membership')
@@ -44,12 +37,16 @@ class DishRecipe(models.Model):
 
 class IngredientQuantityInDishProxy(models.Model):
     ingredient_id = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
-                                      related_name='IngredientQuantityInDishProxy')
+                                      related_name='IngredientQuantityInDishProxy',
+                                      null=False)
     dishrecipe_id = models.ForeignKey(DishRecipe, on_delete=models.CASCADE)
-    ingredient_quantity = models.IntegerField(default=0,
-                                              validators=[
-                                                MinValueValidator(0),
-                                              ])
+    ingredient_quantity = models.IntegerField(
+                            default=0,
+                            validators=[
+                                    MinValueValidator(1),
+                                ],
+                            null=False
+                    )
     # dishrecipe_quantity = models.IntegerField(default=0,
     #                                           validators=[
     #                                             MinValueValidator(0),
@@ -60,4 +57,3 @@ class IngredientQuantityInDishProxy(models.Model):
                  ' ' + str(self.dishrecipe_id) + \
                  '\nqn:' + str(self.ingredient_quantity)
         return output
-# class MealIngredient(models.Model):

@@ -142,7 +142,8 @@ h6, .h6 {
  */
 
 .blog-post {
-  margin-bottom: 4rem;
+  margin: 25px;
+  padding: 10px;
 }
 .blog-post-title {
   margin-bottom: .25rem;
