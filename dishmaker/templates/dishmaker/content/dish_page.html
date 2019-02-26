@@ -2,6 +2,22 @@
 
 {% block inner_context %}
 
-    <h3>HALLO</h3>
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+            <br>
+            <h4> Desctiption: </h4>
+            <hr>
+            <p> {{description}} </p>
+            <h3> Consists of: </h3>
+            <ul style="list-style-type:circle;">
+                {% for name, quantity in ingredients.items %}
+                    <li> {{name}} : {{quantity}} </li>
+                {% endfor %}
+            </ul>
+            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
+            <hr>
+        </div>
+    </div>
 
 {% endblock %}

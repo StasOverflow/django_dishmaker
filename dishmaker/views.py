@@ -29,35 +29,31 @@ class IndexView(ListView, BaseKindaAbstractView):
         context['recipes'] = recipes
         return context
 
-        # return render(request, template_name=self.template_name, context={'title': self.title})
-
-
-def dish_profile(request, dish_id):
-    # cnt = request.session.get('cnt', 0)
-    # cnt += 1
-    # request.session['cnt'] = cnt
-    print(dish_id)
-    # post = .objects.filter(id=post_id).first()
-    # print(post)
-    recipes = DishRecipe.objects.prefetch_related('ingredients').all()
-    # ingredients_in_recipes =
-    # ingredients =
-    return render(request, 'dishmaker/content/index.html', context={'recipes': recipes, 'dish': recipes[0]})
-
 
 class DishView(ListView, BaseKindaAbstractView):
-    template_name = "dishmaker/content/index.html"
-    title = "Recipes list"
+    template_name = "dishmaker/content/dish_page.html"
+    title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
     model = DishRecipe
 
     def get_context_data(self, **kwargs):
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
-        context['title'] = self.title
-        # prefetch_related is like select_related, but for many to many cases
-        recipes = DishRecipe.objects.prefetch_related('ingredients').all()
-        # ingredients_in_recipes =
-        # ingredients =
-        context['recipes'] = recipes
-        return context
+        if 'dish_id' in self.kwargs:
+            dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
+            # context['dish'] = dish
+            context['title'] = dish.name
+            context['description'] = dish.description
+            '''
+                In case there will be repetitions of ingredients, we need to split procedure into two parts
+            '''
+            ing_list = [
+                (ing.ingredient_id.name, ing.ingredient_quantity) for ing in dish.dishrecipe.all()
+            ]
+            context['ingredients'] = dict()
+            for ing in ing_list:
+                if ing[0] not in context['ingredients']:
+                    value = ing[1]
+                else:
+                    value = context['ingredients'][ing[0]] + ing[1]
+                context['ingredients'][ing[0]] = value
 
-        # return render(request, template_name=self.template_name, context={'title': self.title})
+        return context
