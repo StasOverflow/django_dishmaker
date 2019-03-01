@@ -6,19 +6,31 @@
 
         <div class="col-9 offset-1 content-main">
             <br>
-            <h4> Desctiption: </h4>
-            <hr>
             <p> {{description}} </p>
-            <h3> Consists of: </h3>
-            <ul style="list-style-type:circle;">
-                {% for name, quantity in ingredients.items %}
-                    <li> {{name}} : {{quantity}} </li>
-                {% endfor %}
-            </ul>
+            {% with val=dish_id %}
+            <form action="{% url 'dishmaker:order' val %}" method="POST">
+                {% endwith %}
+                {% csrf_token %}
+
+                <h5> Please select ingredients to insert into your dish: </h5>
+                <ul style="list-style-type:circle;">
+                    {% for name, quantity in ingredients.items %}
+                        <li>
+                            <input id="{{name}}" type="number" name="{{name}}" min="1">
+                            <label for="{{name}}">{{name}}</label>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <h5> You may also add a decription to your order </h5>
+                <textarea name="description" cols="60" rows="3"></textarea>
+                <br>
+                <br>
+                <input class="btn btn-primary" type="submit" value="Make an order">
+            </form>
+            <br>
             <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
-
-            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:index' %}">Make an order</a>
         </div>
     </div>
 

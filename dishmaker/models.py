@@ -15,7 +15,7 @@ class Ingredient(models.Model):
         return output
 
 
-class DishRecipe(models.Model):
+class Dish(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
@@ -26,7 +26,7 @@ class DishRecipe(models.Model):
 
 
 class Order(models.Model):
-    name = models.CharField(max_length=30)
+    created_on = models.DateTimeField(auto_now=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
 
@@ -45,7 +45,7 @@ class IngredientQuantityInDishProxy(models.Model):
                             default=None,
                         )
     dishrecipe_id = models.ForeignKey(
-                            DishRecipe,
+                            Dish,
                             related_name='dishrecipe',
                             on_delete=models.SET_NULL,
                             blank=True,
