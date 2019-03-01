@@ -1,0 +1,25 @@
+{% extends "dishmaker/content/content_base.html" %}
+
+{% block inner_context %}
+
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+            <br>
+            <h4> Desctiption: </h4>
+            <hr>
+            <p> {{description}} </p>
+            <h3> Consists of: </h3>
+            <ul style="list-style-type:circle;">
+                {% for name, quantity in ingredients.items %}
+                    <li> {{name}} : {{quantity}} </li>
+                {% endfor %}
+            </ul>
+            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
+            <hr>
+
+            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:index' %}">Make an order</a>
+        </div>
+    </div>
+
+{% endblock %}
