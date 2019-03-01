@@ -2,16 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-class Order(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    description = models.TextField(blank=True)
-    # last_name = models.CharField(max_length=30)
-
-    def __str__(self):
-        output = str(self.name) + '\n' + str(self.description)
-        return output
-
-
 class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(blank=True)
@@ -35,18 +25,49 @@ class DishRecipe(models.Model):
         return output
 
 
+class Order(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.TextField(null=True)
+    ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
+
+    def __str__(self):
+        output = str(self.name) + '\n' + str(self.description)
+        return output
+
+
 class IngredientQuantityInDishProxy(models.Model):
-    ingredient_id = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
-                                      related_name='IngredientQuantityInDishProxy',
-                                      null=False)
-    dishrecipe_id = models.ForeignKey(DishRecipe, related_name='dishrecipe', on_delete=models.CASCADE)
+    ingredient_id = models.ForeignKey(
+                            Ingredient,
+                            related_name='ing_dish_quan',
+                            on_delete=models.SET_NULL,
+                            blank=True,
+                            null=True,
+                            default=None,
+                        )
+    dishrecipe_id = models.ForeignKey(
+                            DishRecipe,
+                            related_name='dishrecipe',
+                            on_delete=models.SET_NULL,
+                            blank=True,
+                            null=True,
+                            default=None,
+                        )
+    order_id = models.ForeignKey(
+                            Order,
+                            related_name='order',
+                            on_delete=models.SET_NULL,
+                            blank=True,
+                            null=True,
+                            default=None,
+                        )
+
     ingredient_quantity = models.IntegerField(
                             default=0,
                             validators=[
                                     MinValueValidator(1),
                                 ],
-                            null=False
-                    )
+                            null=False,
+                        )
     # dishrecipe_quantity = models.IntegerField(default=0,
     #                                           validators=[
     #                                             MinValueValidator(0),

@@ -39,8 +39,37 @@ class DishView(ListView, BaseKindaAbstractView):
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
-            # context['dish'] = dish
             context['title'] = dish.name
+            context['description'] = dish.description
+            '''
+                In case there will be repetitions of ingredients, we need to split procedure into two parts
+            '''
+            ing_list = [
+                (ing.ingredient_id.name, ing.ingredient_quantity) for ing in dish.dishrecipe.all()
+            ]
+            context['ingredients'] = dict()
+            for ing in ing_list:
+                if ing[0] not in context['ingredients']:
+                    value = ing[1]
+                else:
+                    value = context['ingredients'][ing[0]] + ing[1]
+                context['ingredients'][ing[0]] = value
+
+            context['dish_id'] = self.kwargs['dish_id']
+
+        return context
+
+
+class OrderView(ListView, BaseKindaAbstractView):
+    template_name = "dishmaker/content/order_page.html"
+    title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
+    model = DishRecipe
+
+    def get_context_data(self, **kwargs):
+        context = BaseKindaAbstractView.get_context_data(self, **kwargs)
+        if 'dish_id' in self.kwargs:
+            dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
+            context['title'] = dish.name + ' order'
             context['description'] = dish.description
             '''
                 In case there will be repetitions of ingredients, we need to split procedure into two parts
