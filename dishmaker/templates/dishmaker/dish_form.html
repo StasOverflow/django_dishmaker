@@ -5,7 +5,7 @@
     <br>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
 
         <table class="table">
             {{ dish_formset.management_form }}

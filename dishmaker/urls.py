@@ -15,7 +15,7 @@ urlpatterns = [
     path('dish/update/<pk>/', DishUpdateView.as_view(), name='dish_update'),
     path('dish/delete/<pk>/', DishDeleteView.as_view(), name='dish_delete'),
 
-    path('order_page/<int:dish_id>', OrderView.as_view(), name='order'),
+    path('order_page/add/<int:dish_id>', OrderView.as_view(), name='order'),
     path('order_list', OrderListView.as_view(), name='order_list'),
 
     path('ingredient/', IngredientListView.as_view(), name='ingredient_list'),

@@ -82,12 +82,7 @@ class DishCreateView(CreateView):
         context['title'] = self.title
         if self.request.POST:
             # print('GOT POST with ', self.request.POST)
-            if self.object is not None:
-                context['dish_formset'] = DishIngredientFormSet(self.request.POST)
-            else:
-                context['dish_formset'] = DishIngredientFormSet()
-
-            print(self.request.POST)
+            context['dish_formset'] = DishIngredientFormSet(self.request.POST)
         else:
             context['dish_formset'] = DishIngredientFormSet()
         return context
@@ -96,8 +91,7 @@ class DishCreateView(CreateView):
         context = self.get_context_data()
         formset = context['dish_formset']
 
-        if self.object:
-            form.save()
+        self.object = form.save()
 
         if formset.is_valid():
             formset.instance = self.object
