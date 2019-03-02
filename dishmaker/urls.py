@@ -4,7 +4,7 @@ from .views import DishListView
 from .views import DishDetailView, DishDeleteView, DishCreateView, DishUpdateView
 from .views import IngredientListView
 from .views import IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
-from .views import OrderView, OrderListView, OrderCreateView, OrderFromDish
+from .views import OrderDetailView, OrderListView, OrderCreateView, OrderFromDish, OrderDeleteView
 
 app_name = 'dishmaker'
 
@@ -18,10 +18,10 @@ urlpatterns = [
     path('form_an_order/<int:dish_id>', OrderFromDish.as_view(), name='order_from_dish'),
 
     path('order_list', OrderListView.as_view(), name='order_list'),
-    path('order_page/<int:dish_id>', OrderView.as_view(), name='order_page'),
+    path('order_page/<pk>', OrderDetailView.as_view(), name='order_page'),
     path('order_page/add/', OrderCreateView.as_view(), name='order_add'),
-    path('order_page/update/<pk>', OrderView.as_view(), name='order_update'),
-    path('order_page/delete/<pk>', OrderView.as_view(), name='order_delete'),
+    path('order_page/update/<pk>', OrderDetailView.as_view(), name='order_update'),
+    path('order_page/delete/<pk>', OrderDeleteView.as_view(), name='order_delete'),
 
     path('ingredient/', IngredientListView.as_view(), name='ingredient_list'),
     path('ingredient/<pk>', IngredientDetailView.as_view(), name='ingredient'),

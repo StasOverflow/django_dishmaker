@@ -10,7 +10,7 @@
                 <hr>
                 <h4 class="blog-post-title">
                     <a href="{% url 'dishmaker:order_page' order_dict.order.id %}">
-                    Order: {{order_dict.order.id}}
+                    Order: {{order_dict.order.id}} -- {{order_dict.order.dish_id.name}}--
                     </a>
                 </h4>
                 <hr>

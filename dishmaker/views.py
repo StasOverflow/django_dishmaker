@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.list import MultipleObjectMixin
@@ -194,36 +194,27 @@ class IngredientDeleteView(DeleteView):
         return context
 
 
-class OrderView(DetailView):
-    template_name = "dishmaker/content/order_form.html"
+class OrderDetailView(DetailView):
+    template_name = "dishmaker/content/order_page.html"
     title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
-    model = Dish
-
-    def post(self, request, *args, **kwargs):
-        return HttpResponse('We will create an order, somewhen..')
+    model = Order
 
     def get_context_data(self, **kwargs):
-        context = dict()
-        # context = BaseKindaAbstractView.get_context_data(self, **kwargs)
-        if 'dish_id' in self.kwargs:
-            dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
-            context['title'] = dish.name
-            context['description'] = dish.description
-            '''
-                In case there will be repetitions of ingredients, we need to split procedure into two parts
-            '''
-            ing_list = [
-                (ing.ingredient_id.name, ing.ingredient_quantity) for ing in dish.dishrecipe.all()
-            ]
-            context['ingredients'] = dict()
-            for ing in ing_list:
-                if ing[0] not in context['ingredients']:
-                    value = ing[1]
-                else:
-                    value = context['ingredients'][ing[0]] + ing[1]
-                context['ingredients'][ing[0]] = value
-
-            context['dish_id'] = self.kwargs['dish_id']
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Order: ' + str(self.object.id)
+        '''
+            In case there will be repetitions of ingredients, we need to split procedure into two parts
+        '''
+        ing_list = [
+            (ing.ingredient_id.name, ing.ingredient_quantity) for ing in self.object.order.all()
+        ]
+        context['ingredients'] = dict()
+        for ing in ing_list:
+            if ing[0] not in context['ingredients']:
+                value = ing[1]
+            else:
+                value = context['ingredients'][ing[0]] + ing[1]
+            context['ingredients'][ing[0]] = value
 
         return context
 
@@ -235,7 +226,6 @@ class OrderFromDish(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = dict()
-        # context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
             context['title'] = dish.name
@@ -261,12 +251,13 @@ class OrderFromDish(TemplateView):
 
 class OrderCreateView(TemplateView):
     model = Order
-    success_url = reverse_lazy('dishmaker:index')
+    success_url = reverse_lazy('dishmaker:order_list')
 
-    blacklist = ('csrfmiddlewaretoken', 'description')
+    blacklist = ('csrfmiddlewaretoken', 'description', 'dish_id')
 
     def post(self, request, *args, **kwargs):
-        instance = self.model.objects.create(description=request.POST.get('description'))
+        instance = self.model.objects.create(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
+                                             description=request.POST.get('description'))
         ingredient_dict = {key: value for key, value in request.POST.items() if key not in self.blacklist}
         instance.save()
 
@@ -274,7 +265,7 @@ class OrderCreateView(TemplateView):
             ingredient_database_instance = Ingredient.objects.filter(name=ingred).first()
             instance.order.create(ingredient_id=ingredient_database_instance, ingredient_quantity=quantity)
 
-        return HttpResponse('We will create an order, somewhen..')
+        return redirect(self.success_url)
 
 
 class OrderListView(ListView, BaseKindaAbstractView):
@@ -310,4 +301,15 @@ class OrderListView(ListView, BaseKindaAbstractView):
                 order_list.append(order_dict)
 
         context['order_list'] = order_list
+        return context
+
+
+class OrderDeleteView(DeleteView):
+    model = Order
+    title = "Remove an order"
+    success_url = reverse_lazy('dishmaker:order_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
         return context

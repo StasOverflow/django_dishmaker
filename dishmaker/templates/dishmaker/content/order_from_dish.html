@@ -10,15 +10,16 @@
             <form action="{% url 'dishmaker:order_add' %}" method="POST">
                 {% endwith %}
                 {% csrf_token %}
-
+                <h5> Ordering for {{object.dish_id}}</h5>
                 <h5> Please select ingredients to insert into your dish: </h5>
                 <ul style="list-style-type:circle;">
                     {% for name, quantity in ingredients.items %}
                         <li>
-                            <input id="{{name}}" type="number" name="{{name}}" min="1">
+                            <input id="{{name}}" type="number" name="{{name}}" value="{{quantity}}" min="1">
                             <label for="{{name}}">{{name}}</label>
                         </li>
                     {% endfor %}
+                    <input type="hidden" value="{{ dish_id }}" name="dish_id">
                 </ul>
 
                 <h5> You may also add a decription to your order </h5>
