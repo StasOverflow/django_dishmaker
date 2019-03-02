@@ -194,8 +194,8 @@ class IngredientDeleteView(DeleteView):
         return context
 
 
-class OrderView(TemplateView, BaseKindaAbstractView):
-    template_name = "dishmaker/content/order_page.html"
+class OrderView(DetailView):
+    template_name = "dishmaker/content/order_form.html"
     title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
     model = Dish
 
@@ -228,15 +228,86 @@ class OrderView(TemplateView, BaseKindaAbstractView):
         return context
 
 
+class OrderFromDish(TemplateView):
+    template_name = "dishmaker/content/order_from_dish.html"
+    title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
+    model = Dish
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        # context = BaseKindaAbstractView.get_context_data(self, **kwargs)
+        if 'dish_id' in self.kwargs:
+            dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
+            context['title'] = dish.name
+            context['description'] = dish.description
+            '''
+                In case there will be repetitions of ingredients, we need to split procedure into two parts
+            '''
+            ing_list = [
+                (ing.ingredient_id.name, ing.ingredient_quantity) for ing in dish.dishrecipe.all()
+            ]
+            context['ingredients'] = dict()
+            for ing in ing_list:
+                if ing[0] not in context['ingredients']:
+                    value = ing[1]
+                else:
+                    value = context['ingredients'][ing[0]] + ing[1]
+                context['ingredients'][ing[0]] = value
+
+            context['dish_id'] = self.kwargs['dish_id']
+
+        return context
+
+
+class OrderCreateView(TemplateView):
+    model = Order
+    success_url = reverse_lazy('dishmaker:index')
+
+    blacklist = ('csrfmiddlewaretoken', 'description')
+
+    def post(self, request, *args, **kwargs):
+        instance = self.model.objects.create(description=request.POST.get('description'))
+        ingredient_dict = {key: value for key, value in request.POST.items() if key not in self.blacklist}
+        instance.save()
+
+        for ingred, quantity in ingredient_dict.items():
+            ingredient_database_instance = Ingredient.objects.filter(name=ingred).first()
+            instance.order.create(ingredient_id=ingredient_database_instance, ingredient_quantity=quantity)
+
+        return HttpResponse('We will create an order, somewhen..')
+
+
 class OrderListView(ListView, BaseKindaAbstractView):
-    template_name = "dishmaker/content/order_page.html"
+    template_name = "dishmaker/content/order_list.html"
     title = "Order list"
     model = Order
-    http_method_names = ['post']
 
     def get_context_data(self, **kwargs):
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         context['title'] = self.title
-        recipes = self.objects.prefetch_related('ingredients').all()
-        context['recipes'] = recipes
+        orders = self.object_list
+        order_list = list()
+
+        for order in orders:
+            if order is not None:
+
+                order_dict = dict()
+                order_dict['order'] = order
+                order_dict['ingredients'] = dict()
+                ing_list = [
+                    (
+                        ing.ingredient_id.name,
+                        ing.ingredient_quantity
+                    ) for ing in order.order.all() if ing.ingredient_id is not None
+                ]
+                for ing in ing_list:
+                    if ing[0] not in order_dict['ingredients']:
+                        value = ing[1]
+                    else:
+                        value = order_dict['ingredients'][ing[0]] + ing[1]
+                    order_dict['ingredients'][ing[0]] = value
+
+                order_list.append(order_dict)
+
+        context['order_list'] = order_list
         return context

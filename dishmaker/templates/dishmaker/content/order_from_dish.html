@@ -6,9 +6,8 @@
 
         <div class="col-9 offset-1 content-main">
             <br>
-            <p> {{description}} </p>
             {% with val=dish_id %}
-            <form action="{% url 'dishmaker:order' val %}" method="POST">
+            <form action="{% url 'dishmaker:order_add' %}" method="POST">
                 {% endwith %}
                 {% csrf_token %}
 

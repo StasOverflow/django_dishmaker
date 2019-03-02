@@ -41,7 +41,7 @@ class Order(models.Model):
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
 
     def __str__(self):
-        output = str(self.name) + '\n' + str(self.description)
+        output = str(self.id) + '\n' + str(self.description)
         return output
 
 

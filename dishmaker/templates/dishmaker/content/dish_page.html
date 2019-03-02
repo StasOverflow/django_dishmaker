@@ -17,7 +17,9 @@
             <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
 
-            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order' object.id %}">Make an order</a>
+            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order_from_dish' object.id %}">
+                Make an order
+            </a>
         </div>
         <div class="col-2">
             <div class="row">

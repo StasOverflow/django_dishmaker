@@ -11,6 +11,13 @@ class DishRecipeIngredientInline(admin.TabularInline):
     extra = 1
 
 
+class OrderIngredientInline(admin.TabularInline):
+    model = Dish.ingredients.through
+    verbose_name = 'Ingredient to your recipe'
+    fields = ['ingredient_id', 'ingredient_quantity', ]
+    extra = 1
+
+
 class DishAdmin(admin.ModelAdmin):
     inlines = [
         DishRecipeIngredientInline,
@@ -22,5 +29,13 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
 
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [
+        OrderIngredientInline,
+    ]
+    list_display = ('description', )
+
+
 admin.site.register(Dish, DishAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Order, OrderAdmin)
