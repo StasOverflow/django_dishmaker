@@ -1,29 +1,21 @@
 {% extends "dishmaker/content/content_base.html" %}
 
 {% block inner_context %}
-    <div class="row ">
 
-        <div class="col-9 offset-1 content-main">
-            <br>
-            <p> {{description}} </p>
-            <form method="POST">
-                {% csrf_token %}
-                {{ custom_form }}
-                <!--{{ custom_form.errors }}-->
-                <h5> Ingredients name: </h5>
-                {{ custom_from.description }}
-                <!--{{ custom_form.name }}-->
-                <br>
-                <h5> Insert description (optionally) </h5>
-                {{ custom_from.description }}
-                <br>
-                <br>
-                <input class="btn btn-primary" type="submit" value="Save">
-            </form>
-            <br>
-            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
-            <hr>
-        </div>
-    </div>
+    <br>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <table class="table">
+            {{ dish_formset.management_form }}
+            {% for form_instance in dish_formset.forms %}
+                {{ form_instance }}
+            {% endfor %}
+        </table>
+        <input type="submit" value="Save">
+    </form>
+    <br>
+    <br>
 
 {% endblock %}

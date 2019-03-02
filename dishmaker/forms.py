@@ -18,7 +18,7 @@ class DishForm(ModelForm):
 DishIngredientFormSet = inlineformset_factory(
                             Dish, IngredientQuantityInDishProxy,
                             fields=['ingredient_id', 'ingredient_quantity'],
-                            extra=1,
+                            extra=2,
                             form=DishForm
                         )
 

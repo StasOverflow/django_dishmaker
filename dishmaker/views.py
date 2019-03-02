@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.list import MultipleObjectMixin
@@ -46,7 +47,6 @@ class DishListView(ListView, BaseKindaAbstractView):
         recipe_list = list()
 
         for dish in recipes:
-            print(dish)
             if dish is not None:
 
                 dish_dict = dict()
@@ -77,17 +77,58 @@ class DishCreateView(CreateView):
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:index')
 
-    # def post(self, request, *args, **kwargs):
-    #     print(request.POST)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['custom_form'] = DishIngredientFormSet()
-        for form in context['custom_form']:
-            print(form)
         context['title'] = self.title
-        print(context)
+        if self.request.POST:
+            # print('GOT POST with ', self.request.POST)
+            if self.object is not None:
+                context['dish_formset'] = DishIngredientFormSet(self.request.POST)
+            else:
+                context['dish_formset'] = DishIngredientFormSet()
+
+            print(self.request.POST)
+        else:
+            context['dish_formset'] = DishIngredientFormSet()
         return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['dish_formset']
+
+        if self.object:
+            form.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
+
+class DishUpdateView(UpdateView):
+    model = Dish
+    title = "Add a Dish"
+    fields = ['name', 'description']
+    success_url = reverse_lazy('dishmaker:index')
+
+    def get_context_data(self, **kwargs):
+        context = super(DishUpdateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['dish_formset'] = DishIngredientFormSet(self.request.POST, instance=self.object)
+        else:
+            context['dish_formset'] = DishIngredientFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['dish_formset']
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
 
 
 class DishDeleteView(DeleteView):
