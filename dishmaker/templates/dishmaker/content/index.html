@@ -3,23 +3,18 @@
 
     {% block inner_context %}
     <div class="row ">
-
         <div class="col-9 offset-1 content-main">
-
             {% for dish_comp_dict in recipes_list %}
             <div class="blog-post">
                 <hr>
-                <hr>
-                <h2 class="blog-post-title">
+                <h3 class="blog-post-title">
                     <a href="{% url 'dishmaker:dish' dish_comp_dict.dish.id %}">
                     {{dish_comp_dict.dish.name}}
                     </a>
-                </h2>
-                <hr>
+                </h3>
                 <hr>
                 <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
                 <h4> Desctiption: </h4>
-                <hr>
                 <p> {{dish_comp_dict.dish.description}} </p>
                 <h5> Consists of: </h5>
                 <ul style="list-style-type:circle;">
@@ -27,8 +22,8 @@
                         <li> {{ing}} : {{quantity}} </li>
                     {% endfor %}
                 </ul>
-
-            </div><!-- /.blog-post -->
+            </div>
+            <hr>
             {% endfor %}
 
             {% comment %}

@@ -8,6 +8,7 @@ from django.views.generic.list import MultipleObjectMixin
 from .models import Dish
 from .models import Order
 from .forms import OrderForm
+from django.db.models import Q
 
 
 class BaseKindaAbstractView(MultipleObjectMixin):
@@ -23,15 +24,23 @@ class IndexView(ListView, BaseKindaAbstractView):
     title = "Recipes list"
     model = Dish
 
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            print('having GET ', self.request.GET)
+            if 'search' in self.request.GET:
+                searchword = self.request.GET.get('search')
+                filter_criteria = Q(name__icontains=searchword) | Q(description__icontains=searchword)
+                queryset = self.model.objects.filter(filter_criteria).prefetch_related('ingredients')
+            else:
+                queryset = self.model.objects.all().prefetch_related('ingredients')
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         context['title'] = self.title
-        recipes = self.model.objects.prefetch_related('ingredients').all()
-        # context['recipes_list'] = recipes
-
-        # displayed_dict = context['recipes']
-
+        recipes = self.object_list
         recipe_list = list()
+
         for dish in recipes:
             dish_dict = dict()
             dish_dict['dish'] = dish
@@ -48,11 +57,10 @@ class IndexView(ListView, BaseKindaAbstractView):
                 else:
                     value = dish_dict['ingredients'][ing[0]] + ing[1]
                 dish_dict['ingredients'][ing[0]] = value
-                print(dish_dict['ingredients'])
             recipe_list.append(dish_dict)
 
-            print(recipe_list)
         context['recipes_list'] = recipe_list
+        print(context)
         return context
 
 
@@ -62,6 +70,7 @@ class DishView(ListView, BaseKindaAbstractView):
     model = Dish
 
     def get_context_data(self, **kwargs):
+        print(kwargs)
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
