@@ -1,0 +1,28 @@
+
+
+{% extends "dishmaker/content/content_base.html" %}
+
+{% block inner_context %}
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+            <br>
+            <p> {{description}} </p>
+            <form method="POST">
+                {% csrf_token %}
+                <h5> Ingredients name: </h5>
+                {{ form.name }}
+                <br>
+                <h5> Insert description (optionally) </h5>
+                {{ form.description }}
+                <br>
+                <br>
+                <input class="btn btn-primary" type="submit" value="Create">
+            </form>
+            <br>
+            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
+            <hr>
+        </div>
+    </div>
+
+{% endblock %}

@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(blank=True)
-    created_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     # person_id = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='Membership')
     # group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     # date_joined = models.DateField(auto_now=True)
@@ -20,7 +20,7 @@ class Dish(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
-    created_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         output = str(self.name) + '\n' + str(self.description)
@@ -36,7 +36,7 @@ class Order(models.Model):
                             null=True,
                             default=None,
                         )
-    created_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
 

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import DishListView, DishDetailView, IngredientListView, IngredientDetailView
+from .views import DishListView, DishDetailView
+from .views import IngredientListView, IngredientDetailView, IngredientCreateView
 from .views import OrderView, OrderListView
 
 app_name = 'dishmaker'
@@ -14,5 +15,6 @@ urlpatterns = [
     path('order_list', OrderListView.as_view(), name='order_list'),
 
     path('ingredient/', IngredientListView.as_view(), name='ingredient_list'),
-    path('ingredient/<pk>', IngredientDetailView.as_view(), name='ingredient')
+    path('ingredient/<pk>', IngredientDetailView.as_view(), name='ingredient'),
+    path('ingredient/add/', IngredientCreateView.as_view(), name='ing_add'),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
@@ -65,23 +65,6 @@ class DishDetailView(DetailView):
         return context
 
 
-class DishView(ListView, BaseKindaAbstractView):
-    template_name = "dishmaker/content/dish_page.html"
-    title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
-    model = Dish
-
-    def get_context_data(self, **kwargs):
-        context = BaseKindaAbstractView.get_context_data(self, **kwargs)
-        if 'dish_id' in self.kwargs:
-            dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
-            context['title'] = dish.name
-            context['description'] = dish.description
-            context['ingredients'] = many_to_many_igredients_get()
-            context['dish_id'] = self.kwargs['dish_id']
-
-        return context
-
-
 class DishCreateView(CreateView):
     pass
 
@@ -106,6 +89,18 @@ class IngredientDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.name
         # context['categories'] = list_categories(storeId)
+        return context
+
+
+class IngredientCreateView(CreateView):
+    model = Ingredient
+    title = "Add Ingredient"
+    fields = ['name', 'description']
+    success_url = reverse_lazy('dishmaker:ingredient_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
         return context
 
 

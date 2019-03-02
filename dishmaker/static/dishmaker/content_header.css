@@ -197,3 +197,9 @@ h6, .h6 {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+
+.crud-button {
+    margin: 10px;
+    width: 90px;
+}
