@@ -26,7 +26,6 @@ class IndexView(ListView, BaseKindaAbstractView):
 
     def get_queryset(self):
         if self.request.method == 'GET':
-            print('having GET ', self.request.GET)
             if 'search' in self.request.GET:
                 searchword = self.request.GET.get('search')
                 filter_criteria = Q(name__icontains=searchword) | Q(description__icontains=searchword)
@@ -60,7 +59,6 @@ class IndexView(ListView, BaseKindaAbstractView):
             recipe_list.append(dish_dict)
 
         context['recipes_list'] = recipe_list
-        print(context)
         return context
 
 
@@ -70,7 +68,6 @@ class DishView(ListView, BaseKindaAbstractView):
     model = Dish
 
     def get_context_data(self, **kwargs):
-        print(kwargs)
         context = BaseKindaAbstractView.get_context_data(self, **kwargs)
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
@@ -101,8 +98,6 @@ class OrderView(TemplateView, BaseKindaAbstractView):
     model = Dish
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-        print(kwargs)
         return HttpResponse('We will create an order, somewhen..')
 
     def get_context_data(self, **kwargs):

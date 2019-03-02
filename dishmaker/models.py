@@ -26,6 +26,14 @@ class Dish(models.Model):
 
 
 class Order(models.Model):
+    dish_id = models.ForeignKey(
+                            Dish,
+                            related_name="dish",
+                            on_delete=models.SET_NULL,
+                            blank=True,
+                            null=True,
+                            default=None,
+                        )
     created_on = models.DateTimeField(auto_now=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown

@@ -6,13 +6,19 @@
         <a class="nav-link" href="{% url 'dishmaker:index' %}">Dish list</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link icon-add" href="{% url 'dishmaker:index' %}"><i class="fas fa-plus-square"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link" href="#">Ingredient list</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link icon-add" href="{% url 'dishmaker:index' %}"><i class="fas fa-plus-square"></i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Order list</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link icon-add" href="{% url 'dishmaker:index' %}"><i class="fas fa-plus-square"></i></a>
       </li>
     </ul>
     <form method='GET' action=""  class="form-inline my-2 my-lg-0">
