@@ -18,7 +18,7 @@ class Ingredient(models.Model):
 
 class Dish(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     created_on = models.DateTimeField(auto_now_add=True)
 

@@ -5,7 +5,6 @@
     <div class="row ">
 
         <div class="col-9 offset-1 content-main">
-            <br>
             <h4> Desctiption: </h4>
             <hr>
             <p> {{object.description}} </p>
@@ -19,6 +18,18 @@
             <hr>
 
             <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order' object.id %}">Make an order</a>
+        </div>
+        <div class="col-2">
+            <div class="row">
+                <a href="#" type="button" class="btn btn-primary crud-button">
+                    Edit
+                </a>
+            </div>
+            <div class="row">
+                <a href="{% url 'dishmaker:dish_delete' object.id %}" type="button" class="btn btn-primary crud-button">
+                    Delete
+                </a>
+            </div>
         </div>
     </div>
 

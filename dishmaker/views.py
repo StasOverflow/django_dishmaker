@@ -10,6 +10,7 @@ from django.views.generic import DeleteView
 from .models import Dish
 from .models import Order
 from .models import Ingredient
+from .forms import DishIngredientFormSet
 from django.db.models import Q
 
 from .utils import many_to_many_igredients_get
@@ -45,10 +46,13 @@ class DishListView(ListView, BaseKindaAbstractView):
         recipe_list = list()
 
         for dish in recipes:
-            dish_dict = dict()
-            dish_dict['dish'] = dish
-            dish_dict['ingredients'] = many_to_many_igredients_get(dish)
-            recipe_list.append(dish_dict)
+            print(dish)
+            if dish is not None:
+
+                dish_dict = dict()
+                dish_dict['dish'] = dish
+                dish_dict['ingredients'] = many_to_many_igredients_get(dish)
+                recipe_list.append(dish_dict)
 
         context['recipes_list'] = recipe_list
         return context
@@ -68,7 +72,33 @@ class DishDetailView(DetailView):
 
 
 class DishCreateView(CreateView):
-    pass
+    model = Dish
+    title = "Add a Dish"
+    fields = ['name', 'description']
+    success_url = reverse_lazy('dishmaker:index')
+
+    # def post(self, request, *args, **kwargs):
+    #     print(request.POST)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['custom_form'] = DishIngredientFormSet()
+        for form in context['custom_form']:
+            print(form)
+        context['title'] = self.title
+        print(context)
+        return context
+
+
+class DishDeleteView(DeleteView):
+    model = Dish
+    title = "Remove dish"
+    success_url = reverse_lazy('dishmaker:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
+        return context
 
 
 class IngredientListView(ListView, BaseKindaAbstractView):

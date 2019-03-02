@@ -8,12 +8,14 @@
             <p> {{description}} </p>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.errors }}
+                {{ custom_form }}
+                <!--{{ custom_form.errors }}-->
                 <h5> Ingredients name: </h5>
-                {{ form.name }}
+                {{ custom_from.description }}
+                <!--{{ custom_form.name }}-->
                 <br>
                 <h5> Insert description (optionally) </h5>
-                {{ form.description }}
+                {{ custom_from.description }}
                 <br>
                 <br>
                 <input class="btn btn-primary" type="submit" value="Save">

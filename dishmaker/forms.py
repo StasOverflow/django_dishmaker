@@ -1,14 +1,35 @@
 from django import forms
+from .models import Dish
 from .models import Order
 from .models import Ingredient
-from django.forms import formset_factory
+from .models import IngredientQuantityInDishProxy
+from django.forms import inlineformset_factory
+from django.forms import BaseModelFormSet
+from django.forms import ModelForm
 
 
-class OrderForm(forms.ModelForm):
+class DishForm(ModelForm):
 
     class Meta:
-        model = Order
-        fields = ['description', 'ingredients']
+        model = Dish
+        fields = ('name', 'description')
+
+
+DishIngredientFormSet = inlineformset_factory(
+                            Dish, IngredientQuantityInDishProxy,
+                            fields=['ingredient_id', 'ingredient_quantity'],
+                            extra=1,
+                            form=DishForm
+                        )
+
+
+# class AdditionalIngredient(BaseModelFormSet):
+#
+#     ingredients_choice = forms.ModelMultipleChoiceField(queryset=Dish.dishrecipe.all())
+
+    # class Meta:
+    #     model = Order
+    #     fields = ['ingredients_choice']
 
 
 '''
