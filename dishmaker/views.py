@@ -12,6 +12,7 @@ from .models import Dish
 from .models import Order
 from .models import Ingredient
 from .forms import DishIngredientFormSet
+from .forms import OrderIngredientFormSet
 from django.db.models import Q
 
 from .utils import many_to_many_igredients_get
@@ -102,12 +103,12 @@ class DishCreateView(CreateView):
 
 class DishUpdateView(UpdateView):
     model = Dish
-    title = "Add a Dish"
+    title = "Update a Dish"
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:index')
 
     def get_context_data(self, **kwargs):
-        context = super(DishUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['dish_formset'] = DishIngredientFormSet(self.request.POST, instance=self.object)
         else:
@@ -313,3 +314,29 @@ class OrderDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         return context
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    title = "Update an order"
+    success_url = reverse_lazy('dishmaker:order_list')
+    fields = ['dish_id', 'description']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['order_formset'] = OrderIngredientFormSet(self.request.POST, instance=self.object)
+        else:
+            context['order_formset'] = OrderIngredientFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['order_formset']
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
