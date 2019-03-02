@@ -1,0 +1,22 @@
+{% extends "dishmaker/content/content_base.html" %}
+
+{% block inner_context %}
+
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+            {% for ing in ingredients %}
+                <hr>
+                    <h2> <a href="{% url 'dishmaker:ingredient' ing.id %}"> {{ing.name}} </a> </h2>
+
+                    </a>
+                <br>
+                <p> {{ing.description}} </p>
+                <p class="blog-post-meta">Added on {{ing.created_on}}, by <a href="#">SampleGuy</a></p>
+            {% endfor %}
+            <hr>
+
+        </div>
+    </div>
+
+{% endblock %}

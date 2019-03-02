@@ -1,0 +1,18 @@
+{% extends "dishmaker/content/content_base.html" %}
+
+{% block inner_context %}
+
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+            <h5> Desctiption: </h5>
+
+            <p> {{object.description}} </p>
+            </ul>
+            <p class="blog-post-meta">Added on {{object.created_on}}, by <a href="#">SampleGuy</a></p>
+            <hr>
+
+        </div>
+    </div>
+
+{% endblock %}

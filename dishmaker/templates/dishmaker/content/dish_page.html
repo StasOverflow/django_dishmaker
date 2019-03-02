@@ -8,7 +8,7 @@
             <br>
             <h4> Desctiption: </h4>
             <hr>
-            <p> {{description}} </p>
+            <p> {{object.description}} </p>
             <h3> Consists of: </h3>
             <ul style="list-style-type:circle;">
                 {% for name, quantity in ingredients.items %}
@@ -18,7 +18,7 @@
             <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
 
-            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order' dish_id %}">Make an order</a>
+            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order' object.id %}">Make an order</a>
         </div>
     </div>
 

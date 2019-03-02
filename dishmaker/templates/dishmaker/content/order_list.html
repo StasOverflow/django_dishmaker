@@ -1,0 +1,24 @@
+{% extends "dishmaker/content/content_base.html" %}
+
+{% block inner_context %}
+
+    <div class="row ">
+
+        <div class="col-9 offset-1 content-main">
+
+            {% for ord in orders %}
+                <hr>
+                    {% comment %}
+                    <a href="{% url 'dishmaker:dish' dish_comp_dict.dish.id %}">
+                    {% endcomment %}
+
+                    </a>
+                <br>
+                <p class="blog-post-meta">Added on {{ing.created_on}}, by <a href="#">SampleGuy</a></p>
+            {% endfor %}
+            <hr>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -5,7 +5,9 @@
 
 .icon-add {
     font-size: 26px;
+    margin-right: 5px !important;
     padding-left: 0px !important;
+    padding-right: 0px !important;
     padding-top: 3px !important;
     padding-bottom: 1px !important;
 }
@@ -13,7 +15,6 @@
 .icon-add:hover {
     color: #28a745 !important;
 }
-
 
 .title {
     background-color: Gainsboro;
