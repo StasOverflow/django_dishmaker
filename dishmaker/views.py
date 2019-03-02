@@ -5,6 +5,8 @@ from django.views.generic.list import ListView
 from django.views.generic.list import MultipleObjectMixin
 from django.views.generic import CreateView
 from django.views.generic import DetailView
+from django.views.generic import UpdateView
+from django.views.generic import DeleteView
 from .models import Dish
 from .models import Order
 from .models import Ingredient
@@ -54,7 +56,7 @@ class DishListView(ListView, BaseKindaAbstractView):
 
 class DishDetailView(DetailView):
     template_name = "dishmaker/content/dish_page.html"
-    title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
+    title = "A dish name"  # Should be replaced inside 'get_context_data' with a dish title
     model = Dish
 
     def get_context_data(self, **kwargs):
@@ -96,6 +98,29 @@ class IngredientCreateView(CreateView):
     model = Ingredient
     title = "Add Ingredient"
     fields = ['name', 'description']
+    success_url = reverse_lazy('dishmaker:ingredient_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
+        return context
+
+
+class IngredientUpdateView(UpdateView):
+    model = Ingredient
+    title = "Update Ingredient"
+    fields = ['name', 'description']
+    success_url = reverse_lazy('dishmaker:ingredient_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.title
+        return context
+
+
+class IngredientDeleteView(DeleteView):
+    model = Ingredient
+    title = "Remove ingredient"
     success_url = reverse_lazy('dishmaker:ingredient_list')
 
     def get_context_data(self, **kwargs):

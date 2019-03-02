@@ -10,6 +10,7 @@
             <p> {{description}} </p>
             <form method="POST">
                 {% csrf_token %}
+                {{ form.errors }}
                 <h5> Ingredients name: </h5>
                 {{ form.name }}
                 <br>
@@ -17,7 +18,7 @@
                 {{ form.description }}
                 <br>
                 <br>
-                <input class="btn btn-primary" type="submit" value="Create">
+                <input class="btn btn-primary" type="submit" value="Save">
             </form>
             <br>
             <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
