@@ -23,7 +23,7 @@ class Dish(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        output = str(self.name) + '\n' + str(self.description)
+        output = str(self.name)
         return output
 
 
