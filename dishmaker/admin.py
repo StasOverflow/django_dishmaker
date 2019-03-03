@@ -1,7 +1,5 @@
 from django.contrib import admin
-
-# Register your models here.
-from .models import Dish, Ingredient, Order, IngredientQuantityInDishProxy
+from .models import Dish, Ingredient, Order
 
 
 class DishRecipeIngredientInline(admin.TabularInline):
