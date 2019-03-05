@@ -210,6 +210,7 @@ class OrderDetailView(DetailView):
             (ing.ingredient_id.name, ing.ingredient_quantity) for ing in self.object.order.all()
         ]
         context['ingredients'] = dict()
+        context['name'] = self.model.__name__
         for ing in ing_list:
             if ing[0] not in context['ingredients']:
                 value = ing[1]

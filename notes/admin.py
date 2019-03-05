@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Note, NoteItem
+from .models import Note, NotedItem
 
 
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'created_on')
+    list_display = ('title', 'created_on')
 
 
 class NoteItemAdmin(admin.ModelAdmin):
@@ -11,4 +11,4 @@ class NoteItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Note, NoteAdmin)
-admin.site.register(NoteItem, NoteItemAdmin)
+admin.site.register(NotedItem, NoteItemAdmin)
