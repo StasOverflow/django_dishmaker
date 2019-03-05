@@ -16,6 +16,8 @@ class NoteListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(NoteListView, self).get_context_data()
         context['title'] = self.title
+        context['object_list'] = self.object_list
+        print(context)
         return context
 
 
@@ -53,7 +55,6 @@ class NoteCreateView(TemplateView):
             return self.render_to_response(context)
 
     def get(self, request, *args, **kwargs):
-        print(request.GET)
         context = self.get_context_data(**kwargs)
         model_type = request.GET.get('model_type')
         model_id = request.GET.get('model_id')
