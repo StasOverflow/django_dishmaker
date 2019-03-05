@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Note(models.Model):
     title = models.CharField(max_length=30, unique=True, blank=False)
     description = models.CharField(max_length=140, blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
+    tags = GenericRelation('NoteItem')
 
     def __str__(self):
         return self.title

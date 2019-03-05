@@ -1,0 +1,67 @@
+{% extends "dishmaker/content/content_base.html" %}
+
+
+    {% block inner_context %}
+    <div class="row ">
+        <div class="col-9 offset-1 content-main">
+            {% for dish_comp_dict in recipes_list %}
+            <div class="blog-post">
+                <hr>
+                <h3 class="blog-post-title">
+                    <a href="{% url 'dishmaker:dish_page' dish_comp_dict.dish.id %}">
+                    {{dish_comp_dict.dish.name}}
+                    </a>
+                </h3>
+                <hr>
+                <p class="blog-post-meta">Added on {{dish_comp_dict.dish.created_on}}, by <a href="#">SampleGuy</a></p>
+                <h4> Desctiption: </h4>
+                <p> {{dish_comp_dict.dish.description}} </p>
+                <h5> Consists of: </h5>
+                <ul style="list-style-type:circle;">
+                    {% for ing, quantity in dish_comp_dict.ingredients.items %}
+                        <li> {{ing}} : {{quantity}} </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <hr>
+            {% endfor %}
+
+            {% comment %}
+            <div class="col-sm-3 offset-sm-1 blog-sidebar">
+              <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+              </div>
+              <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                  <li><a href="#">March 2014</a></li>
+                  <li><a href="#">February 2014</a></li>
+                  <li><a href="#">January 2014</a></li>
+                  <li><a href="#">December 2013</a></li>
+                  <li><a href="#">November 2013</a></li>
+                  <li><a href="#">October 2013</a></li>
+                  <li><a href="#">September 2013</a></li>
+                  <li><a href="#">August 2013</a></li>
+                  <li><a href="#">July 2013</a></li>
+                  <li><a href="#">June 2013</a></li>
+                  <li><a href="#">May 2013</a></li>
+                  <li><a href="#">April 2013</a></li>
+                </ol>
+              </div>
+              <div class="sidebar-module">
+                <h4>Elsewhere</h4>
+                <ol class="list-unstyled">
+                  <li><a href="#">GitHub</a></li>
+                  <li><a href="#">Twitter</a></li>
+                  <li><a href="#">Facebook</a></li>
+                </ol>
+              </div>
+            </div><!-- /.blog-sidebar -->
+
+            {% endcomment %}
+
+          </div><!-- /.row -->
+
+    </div>
+    {% endblock %}
