@@ -19,7 +19,7 @@ class Dish(models.Model):
     description = models.TextField(null=True, blank=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     created_on = models.DateTimeField(auto_now_add=True)
-    notes = GenericRelation(NotedItem)
+    notes = GenericRelation(NotedItem, related_query_name='dish')
 
     def __str__(self):
         output = str(self.name)
@@ -38,7 +38,7 @@ class Order(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
-    notes = GenericRelation(NotedItem)
+    notes = GenericRelation(NotedItem, related_query_name='order')
 
     def __str__(self):
         output = 'Order: ' + str(self.id)

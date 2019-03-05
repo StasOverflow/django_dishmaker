@@ -6,18 +6,30 @@ from django.views.generic import CreateView, DetailView, TemplateView
 from .models import NotedItem
 from django.apps.registry import apps
 from .forms import NoteForm
+from django.contrib.contenttypes.models import ContentType
 
 
-class NoteListView(ListView):
+class NoteOrderListView(ListView):
     model = NotedItem
     title = 'Note list'
     template_name = 'notes/note_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(NoteListView, self).get_context_data()
+        context = super(NoteOrderListView, self).get_context_data()
         context['title'] = self.title
-        context['object_list'] = self.object_list
-        print(context)
+        context['object_list'] = self.object_list.filter(content_type__model='order')
+        return context
+
+
+class NoteDishListView(ListView):
+    model = NotedItem
+    title = 'Note list'
+    template_name = 'notes/note_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(NoteDishListView, self).get_context_data()
+        context['title'] = self.title
+        context['object_list'] = self.object_list.filter(content_type__model='dish')
         return context
 
 
@@ -25,7 +37,6 @@ class NoteCreateView(TemplateView):
     template_name = "notes/note_page.html"
     title = ""
     model = NotedItem
-    success_url = reverse_lazy('notes:index')
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -50,7 +61,9 @@ class NoteCreateView(TemplateView):
             content_object = instance
             noted_item = NotedItem(content_object=content_object, note=note)
             noted_item.save()
-            return redirect(self.success_url)
+            reversing_string = 'notes:' + str(model_type)
+            success_url = reverse_lazy('notes:index')
+            return redirect(reversing_string)
         else:
             return self.render_to_response(context)
 
