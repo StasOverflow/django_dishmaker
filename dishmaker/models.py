@@ -1,15 +1,13 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
+from django.contrib.contenttypes.fields import GenericRelation
+from notes.models import NotedItem
 
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    # person_id = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='Membership')
-    # group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
-    # date_joined = models.DateField(auto_now=True)
-    # invite_reason = models.CharField(max_length=100)
 
     def __str__(self):
         output = str(self.name)
@@ -21,6 +19,7 @@ class Dish(models.Model):
     description = models.TextField(null=True, blank=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     created_on = models.DateTimeField(auto_now_add=True)
+    notes = GenericRelation(NotedItem)
 
     def __str__(self):
         output = str(self.name)
@@ -39,9 +38,10 @@ class Order(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
+    notes = GenericRelation(NotedItem)
 
     def __str__(self):
-        output = str(self.id) + '\n' + str(self.description)
+        output = 'Order: ' + str(self.id)
         return output
 
 
@@ -78,10 +78,6 @@ class IngredientQuantityInDishProxy(models.Model):
                                 ],
                             null=False,
                         )
-    # dishrecipe_quantity = models.IntegerField(default=0,
-    #                                           validators=[
-    #                                             MinValueValidator(0),
-    #                                           ])
 
     def __str__(self):
         output = '\n' + str(self.ingredient_id) + \

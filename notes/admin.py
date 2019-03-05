@@ -1,14 +1,9 @@
 from django.contrib import admin
-from .models import Note, NotedItem
-
-
-class NoteAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_on')
+from .models import NotedItem
 
 
 class NoteItemAdmin(admin.ModelAdmin):
-    list_display = ('note', 'content_type', 'object_id', 'content_object')
+    list_display = ('note', 'content_type', 'object_id', 'content_object', 'created_on')
 
 
-admin.site.register(Note, NoteAdmin)
 admin.site.register(NotedItem, NoteItemAdmin)

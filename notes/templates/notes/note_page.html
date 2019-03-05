@@ -3,37 +3,28 @@
 {% block inner_context %}
 
     <div class="row ">
-        {% comment %}
         <div class="col-9 offset-1 content-main">
-            <h4> Desctiption: </h4>
+            <h2> Сreate a note for: {{name}}</h2>
             <hr>
-            <p> {{object.description}} </p>
-            <h3> Consists of: </h3>
-            <ul style="list-style-type:circle;">
-                {% for name, quantity in ingredients.items %}
-                    <li> {{name}} : {{quantity}} </li>
-                {% endfor %}
-            </ul>
+            <h4> Description: </h4>
+            <p>
+                {{description}}
+            </p>
             <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
-
-            <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order_from_dish' object.id %}">
-                Make an order
-            </a>
+            <form action="{% url 'notes:create_note' %}" method="POST">
+                {% csrf_token %}
+                <h4> Your note goes here </h4>
+                <textarea name="note" cols="70" rows="3"></textarea>
+                {{errors}}
+                <input type="hidden" value="{{ model_type }}" name="model_type">
+                <input type="hidden" value="{{ model_id }}" name="model_id">
+                <br>
+                <br>
+                <input class="btn btn-primary" type="submit" value="Apply Note">
+            </form>
+            <br>
         </div>
-        <div class="col-2">
-            <div class="row">
-                <a href="{% url 'dishmaker:dish_update' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Edit
-                </a>
-            </div>
-            <div class="row">
-                <a href="{% url 'dishmaker:create_note' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Delete
-                </a>
-            </div>
-        </div>
-        {% endcomment %}
     </div>
 
 {% endblock %}

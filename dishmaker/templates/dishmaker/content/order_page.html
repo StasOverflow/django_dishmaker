@@ -27,9 +27,8 @@
             </div>
             <br>
             <div class="row">
-                <form action="{% url 'notes:create_note' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{ name }}" name="model_name">
+                <form action="{% url 'notes:create_note' %}" method="get">
+                    <input type="hidden" value="{{ model_type }}" name="model_type">
                     <input type="hidden" value="{{ object.id }}" name="model_id">
                     <button class="btn btn-primary crud-button" type="submit">
                         Note

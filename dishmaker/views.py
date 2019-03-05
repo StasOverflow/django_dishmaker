@@ -14,7 +14,6 @@ from .models import Ingredient
 from .forms import DishIngredientFormSet
 from .forms import OrderIngredientFormSet
 from django.db.models import Q
-
 from .utils import many_to_many_igredients_get
 
 
@@ -68,6 +67,7 @@ class DishDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.name
         context['ingredients'] = many_to_many_igredients_get(self.object)
+        context['model_type'] = self.model.__name__
 
         return context
 
@@ -210,7 +210,7 @@ class OrderDetailView(DetailView):
             (ing.ingredient_id.name, ing.ingredient_quantity) for ing in self.object.order.all()
         ]
         context['ingredients'] = dict()
-        context['name'] = self.model.__name__
+        context['model_type'] = self.model.__name__
         for ing in ing_list:
             if ing[0] not in context['ingredients']:
                 value = ing[1]
