@@ -7,7 +7,7 @@
         <div class="col-9 offset-1 content-main">
             <br>
             {% with val=dish_id %}
-            <form action="{% url 'dishmaker:order_add' %} " method="POST" novalidate>
+            <form action="{% url 'dishmaker:order_add' %} " method="POST">
                 {% endwith %}
                 {% csrf_token %}
                 <h5> Ordering for {{object.dish_id}}</h5>

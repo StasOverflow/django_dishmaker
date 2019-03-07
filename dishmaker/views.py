@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.shortcuts import reverse
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.list import MultipleObjectMixin
@@ -13,6 +14,7 @@ from .models import Order
 from .models import Ingredient
 from .forms import DishIngredientFormSet
 from .forms import OrderIngredientFormSet
+from django.http import HttpResponseRedirect
 from django.db.models import Q
 from .utils import many_to_many_igredients_get
 
@@ -232,11 +234,13 @@ class OrderFromDish(TemplateView):
     model = Dish
 
     def get_context_data(self, **kwargs):
-        context = dict()
+        context = super().get_context_data()
+        print(context.values())
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
             context['title'] = dish.name
             context['description'] = dish.description
+
             '''
                 In case there will be repetitions of ingredients, we need to split procedure into two parts
             '''
@@ -264,15 +268,27 @@ class OrderCreateView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         print(request.POST)
-        instance = self.model(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
-                              description=request.POST.get('description'))
-        instance.save()
         ingredient_dict = {key: value for key, value in request.POST.items() if key not in self.blacklist}
-        instance.save()
+
+        for value in ingredient_dict.values():
+            if int(value) < 1:
+                error_message = 'ingredient quantity cant be lower than 1'
+                data = dict()
+                data.update(request.POST)
+                data['error_message'] = error_message
+                return redirect(reverse('dishmaker:order_from_dish',
+                                        kwargs={'dish_id': request.POST.get('dish_id')}),
+                                )
+
+        instance = self.model.objects.create(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
+                                             description=request.POST.get('description'))
 
         for ingred, quantity in ingredient_dict.items():
             ingredient_database_instance = Ingredient.objects.filter(name=ingred).first()
+            '''order here is a related name'''
             instance.order.create(ingredient_id=ingredient_database_instance, ingredient_quantity=quantity)
+            print('ingredient instance created')
+
 
         return redirect(self.success_url)
 

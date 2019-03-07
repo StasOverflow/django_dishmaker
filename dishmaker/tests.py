@@ -66,23 +66,33 @@ class DishTestCase(TestCase):
         self.client.post(reverse('dishmaker:order_add'), quasi_post_data, pk=self.dish.id)
         self.assertEquals(Order.objects.count(), orders_count + 1)
 
-    # def test_order_fail_creation_via_crud(self):
-    #     orders_count = Order.objects.count()
-    #     print('order count:', orders_count)
-    #
-    #     '''
-    #         Get a list of ingredients from the dish to order
-    #         ('cause orders are assembled from ingredients, that already persists in a dish)
-    #     '''
-    #     ingredients_dict = {ing.ingredient_id.name: 0 for ing in self.dish.dishrecipe.all()}
-    #
-    #     quasi_post_data = {
-    #         'dish_id': self.dish.id,
-    #         'description': ['sdsfds']
-    #     }
-    #     quasi_post_data.update(ingredients_dict)
-    #
-    #     self.client.post(reverse('dishmaker:order_from_dish'), quasi_post_data, dish_id=self.dish.id)
-    #     self.assertEquals(Order.objects.count(), orders_count)
-    #     print('order count after creation', Order.objects.count())
+    def test_order_fail_creation_via_crud(self):
+        orders_count = Order.objects.count()
+        print('order count:', orders_count)
+
+        '''
+            Get a list of ingredients from the dish to order, and choose their quantity
+        '''
+        ingredients_dict = {ing.ingredient_id.name: -20 for ing in self.dish.dishrecipe.all()}
+
+        quasi_post_data = {
+            'dish_id': self.dish.id,
+            'description': ['sdsfds']
+        }
+        quasi_post_data.update(ingredients_dict)
+
+        self.client.post(reverse('dishmaker:order_add'), quasi_post_data, dish_id=self.dish.id)
+        self.assertEquals(Order.objects.count(), orders_count)
+
+        ingredients_dict = {ing.ingredient_id.name: 0 for ing in self.dish.dishrecipe.all()}
+
+        quasi_post_data = {
+            'dish_id': self.dish.id,
+            'description': ['sdsfds']
+        }
+        quasi_post_data.update(ingredients_dict)
+
+        self.client.post(reverse('dishmaker:order_add'), quasi_post_data, dish_id=self.dish.id)
+        self.assertEquals(Order.objects.count(), orders_count)
+        print('order count after creation', Order.objects.count())
 
