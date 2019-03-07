@@ -70,7 +70,6 @@ class IngredientQuantityInDishProxy(models.Model):
                             null=True,
                             default=None,
                         )
-
     ingredient_quantity = models.IntegerField(
                             default=0,
                             validators=[
@@ -82,5 +81,5 @@ class IngredientQuantityInDishProxy(models.Model):
     def __str__(self):
         output = '\n' + str(self.ingredient_id) + \
                  ' ' + str(self.dishrecipe_id) + \
-                 '\nqn:' + str(self.ingredient_quantity)
+                 '\nqn:' + str(self.ingredient_quantity) + '\n'
         return output

@@ -263,8 +263,10 @@ class OrderCreateView(TemplateView):
     blacklist = ('csrfmiddlewaretoken', 'description', 'dish_id')
 
     def post(self, request, *args, **kwargs):
-        instance = self.model.objects.create(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
-                                             description=request.POST.get('description'))
+        print(request.POST)
+        instance = self.model(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
+                              description=request.POST.get('description'))
+        instance.save()
         ingredient_dict = {key: value for key, value in request.POST.items() if key not in self.blacklist}
         instance.save()
 
