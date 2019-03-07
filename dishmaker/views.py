@@ -78,17 +78,22 @@ class DishCreateView(CreateView):
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:index')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.object = None
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         if self.request.POST:
-            # print('GOT POST with ', self.request.POST)
+            print('GOT POST with ', self.request.POST)
             context['dish_formset'] = DishIngredientFormSet(self.request.POST)
         else:
             context['dish_formset'] = DishIngredientFormSet()
         return context
 
     def form_valid(self, form):
+        print('was summoned')
         context = self.get_context_data()
         formset = context['dish_formset']
 
