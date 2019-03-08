@@ -88,24 +88,25 @@ class DishCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.title
         if self.request.POST:
-            print('GOT POST with ', self.request.POST)
+            # print(self.request.POST)
             context['dish_formset'] = DishIngredientFormSet(self.request.POST)
         else:
             context['dish_formset'] = DishIngredientFormSet()
         return context
 
     def form_valid(self, form):
-        print('was summoned')
         context = self.get_context_data()
         formset = context['dish_formset']
 
-        self.object = form.save()
+        if form.is_valid():
 
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
-
-        return super().form_valid(form)
+            if formset.is_valid():
+                self.object = form.save()
+                formset.instance = self.object
+                formset.save()
+                return super().form_valid(form)
+            else:
+                return redirect(reverse('dishmaker:dish_add'))
 
 
 class DishUpdateView(UpdateView):
@@ -235,7 +236,6 @@ class OrderFromDish(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        print(context.values())
         if 'dish_id' in self.kwargs:
             dish = self.model.objects.filter(id=self.kwargs['dish_id']).first()
             context['title'] = dish.name
@@ -267,7 +267,6 @@ class OrderCreateView(TemplateView):
     blacklist = ('csrfmiddlewaretoken', 'description', 'dish_id')
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         ingredient_dict = {key: value for key, value in request.POST.items() if key not in self.blacklist}
 
         for value in ingredient_dict.values():
@@ -287,8 +286,6 @@ class OrderCreateView(TemplateView):
             ingredient_database_instance = Ingredient.objects.filter(name=ingred).first()
             '''order here is a related name'''
             instance.order.create(ingredient_id=ingredient_database_instance, ingredient_quantity=quantity)
-            print('ingredient instance created')
-
 
         return redirect(self.success_url)
 

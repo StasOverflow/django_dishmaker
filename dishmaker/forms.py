@@ -18,7 +18,9 @@ DishIngredientFormSet = inlineformset_factory(
                             Dish, IngredientQuantityInDishProxy,
                             fields=['ingredient_id', 'ingredient_quantity'],
                             extra=2,
-                            form=DishForm
+                            form=DishForm,
+                            min_num=1,
+                            validate_min=1,
                         )
 
 

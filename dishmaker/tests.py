@@ -36,15 +36,17 @@ class DishTestCase(TestCase):
             'dishrecipe-INITIAL_FORMS': ['0'],
             'dishrecipe-MIN_NUM_FORMS': ['0'],
             'dishrecipe-MAX_NUM_FORMS': ['1000'],
-            'dishrecipe-0-ingredient_id': ['2'],
-            'dishrecipe-0-ingredient_quantity': ['3'],
-            'dishrecipe-0-id': [''],
-            'dishrecipe-0-dishrecipe_id': [''],
-            'dishrecipe-1-ingredient_id': ['5'],
-            'dishrecipe-1-ingredient_quantity': ['1'],
+
+            'dishrecipe-0-ingredient_id': self.dish.dishrecipe.get(ingredient_id__name='cucumba').id,
+            'dishrecipe-0-ingredient_quantity':
+                self.dish.dishrecipe.get(ingredient_id__name='cucumba').ingredient_quantity,
+            'dishrecipe-1-ingredient_id': self.dish.dishrecipe.get(ingredient_id__name='coconut').id,
+            'dishrecipe-1-ingredient_quantity':
+                self.dish.dishrecipe.get(ingredient_id__name='coconut').ingredient_quantity,
         }
 
         self.client.post(reverse('dishmaker:dish_add'), quasi_post_data)
+        self.dish.dishrecipe.all()
         self.assertEquals(Dish.objects.count(), dish_count + 1)
 
     def test_order_creation_via_crud(self):
@@ -68,8 +70,6 @@ class DishTestCase(TestCase):
 
     def test_order_fail_creation_via_crud(self):
         orders_count = Order.objects.count()
-        print('order count:', orders_count)
-
         '''
             Get a list of ingredients from the dish to order, and choose their quantity
         '''
@@ -94,5 +94,38 @@ class DishTestCase(TestCase):
 
         self.client.post(reverse('dishmaker:order_add'), quasi_post_data, dish_id=self.dish.id)
         self.assertEquals(Order.objects.count(), orders_count)
-        print('order count after creation', Order.objects.count())
 
+    def test_ingredient_adding_via_crud(self):
+        ingredient = Ingredient.objects.create(name='new', description='prev')
+
+        quasi_post_data = {
+            'name': self.dish.name,
+            'description': self.dish.description,
+            'dishrecipe-TOTAL_FORMS': ['3'],
+            'dishrecipe-INITIAL_FORMS': ['1'],
+            'dishrecipe-MIN_NUM_FORMS': ['1'],
+            'dishrecipe-MAX_NUM_FORMS': ['1000'],
+
+            'dishrecipe-0-ingredient_id': [str(Ingredient.objects.get(name='cucumba').id)],
+            'dishrecipe-0-ingredient_quantity':
+                [str(self.dish.dishrecipe.get(ingredient_id__name='cucumba').ingredient_quantity + 2)],
+            'dishrecipe-0-id': [str(self.dish.dishrecipe.get(ingredient_id__name='cucumba').id)],
+            'dishrecipe-0-dishrecipe_id': [str(self.dish.id)],
+
+            'dishrecipe-1-ingredient_id': [str(Ingredient.objects.get(name='coconut').id)],
+            'dishrecipe-1-ingredient_quantity':
+                [str(self.dish.dishrecipe.get(ingredient_id__name='coconut').ingredient_quantity + 2)],
+            'dishrecipe-1-id':  [str(self.dish.dishrecipe.get(ingredient_id__name='coconut').id)],
+            'dishrecipe-1-dishrecipe_id': [str(self.dish.id)],
+
+            'dishrecipe-2-ingredient_id': [str(Ingredient.objects.get(name='new').id)],
+            'dishrecipe-2-ingredient_quantity': ['2'],
+            'dishrecipe-2-id': [''],
+            'dishrecipe-2-dishrecipe_id': [str(self.dish.id)],
+        }
+
+        count_before_creation = self.dish.dishrecipe.all().count()
+        self.client.post(reverse('dishmaker:dish_update', kwargs={'pk': self.dish.id}), quasi_post_data)
+        print(self.dish.dishrecipe.all().count())
+
+        self.assertGreater(self.dish.dishrecipe.all().count(), count_before_creation)
