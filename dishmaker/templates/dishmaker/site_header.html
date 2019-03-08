@@ -10,15 +10,37 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'notes:dish_notes' %}">Dish note list</a>
             </li>
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Link</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Link</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link disabled" href="#">Disabled</a>-->
-            <!--</li>-->
+        </ul>
+        <ul class="navbar-nav rigth-sequence ml-auto">
+            {% if user.is_authenticated %}
+                <span class="navbar-text">
+                    Hello,
+                </span>
+                <span class="navbar-text name">
+                    George!
+                </span>
+                <li class="nav-item log-button ">
+                    <a class="text-right nav-link" href="#">
+                        <span>
+                            Logout
+                        </span>
+                    </a>
+                </li>
+                {% comment %}
+                    <p><a href="{% url 'logout' %}">logout</a></p>
+                {% endcomment %}
+            {% else %}
+                <li class="nav-item log-button ">
+                    <a class="text-right nav-link" href="#">
+                        <span>
+                            Sign In/Sign Up
+                        </span>
+                    </a>
+                </li>
+                {% comment %}
+                    <a href="{% url 'login' %}">login</a>
+                {% endcomment %}
+            {% endif %}
         </ul>
     </nav>
 </container>

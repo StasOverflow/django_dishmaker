@@ -3,6 +3,21 @@
     margin-right: 7px;
 }
 
+.rigth-sequence {
+    float: right !important;
+}
+
+.log-button {
+    width: 150px;
+    text-alo
+}
+
+.name {
+    margin-left: 10px !important;
+    margin-right: 20px !important;
+    color: #fff !important;
+}
+
 .icon-add {
     font-size: 26px;
     margin-right: 5px !important;
