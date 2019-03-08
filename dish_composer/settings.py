@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dishmaker',
     'notes',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,9 @@ STATIC_URL = '/static/'
 
 # A path to a directory for ./manage.py collectstatic
 STATIC_ROOT = 'assets/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 try:
     from .settings_local import *

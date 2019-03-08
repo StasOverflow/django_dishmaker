@@ -1,0 +1,16 @@
+{% extends 'dishmaker/base.html' %}
+
+{% block content_base %}
+<div class="title">
+     Login
+</div>
+    <div class="row ">
+        <div class="col-8 offset-2 content-main">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
