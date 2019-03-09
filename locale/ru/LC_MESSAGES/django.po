@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 07:35+0300\n"
+"POT-Creation-Date: 2019-03-09 09:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,16 +20,16 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: accounts/forms.py:9 dishmaker/templates/dishmaker/content/dish_page.html:17
+#: accounts/forms.py:13 dishmaker/templates/dishmaker/content/dish_page.html:17
 #: dishmaker/templates/dishmaker/content/index.html:16
 msgid "Chef"
 msgstr "Шеф-повар"
 
-#: accounts/forms.py:10
+#: accounts/forms.py:14
 msgid "Customer"
 msgstr "Клиент"
 
-#: accounts/forms.py:16
+#: accounts/forms.py:20
 msgid "Sign up as"
 msgstr "Войти как"
 
@@ -125,6 +125,7 @@ msgstr "Удалить"
 
 #: dishmaker/templates/dishmaker/content/dish_page.html:47
 #: dishmaker/templates/dishmaker/content/order_page.html:36
+#: notes/templates/notes/note_list.html:14
 msgid "Note"
 msgstr "Заметка"
 
@@ -212,6 +213,30 @@ msgstr "Разлогиниться"
 #: dishmaker/templates/dishmaker/site_header.html:32
 msgid "Sing Up"
 msgstr "Зарегистрироваться"
+
+#: notes/templates/notes/note_list.html:12
+#, fuzzy, python-format
+#| msgid "Ordered on %(date)s, by "
+msgid "Added on %(date)s, by"
+msgstr "Добавлен %(data)s"
+
+#: notes/templates/notes/note_page.html:7
+msgid "Сreate a note for"
+msgstr "Создать заметку для"
+
+#: notes/templates/notes/note_page.html:9
+#, fuzzy
+#| msgid "Desctiption"
+msgid "Description"
+msgstr "Описание"
+
+#: notes/templates/notes/note_page.html:16
+msgid "Your note goes here"
+msgstr "Здесь будет Ваша заметка"
+
+#: notes/templates/notes/note_page.html:23
+msgid "Apply Note"
+msgstr "Прикрепить"
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"

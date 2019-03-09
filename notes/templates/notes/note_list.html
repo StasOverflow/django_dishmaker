@@ -1,5 +1,5 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
 
     <div class="row ">
@@ -8,8 +8,10 @@
             <div class="col-9 offset-1 content-main">
                 <h2> A note for: {{object.content_object}}</h2>
                 <hr>
-                <p class="blog-post-meta">Added on {{object.created_on}}, by <a href="#">SampleGuy</a></p>
-                <h3> Note: </h3>
+                <p class="blog-post-meta">
+                    {% blocktrans with date=object.created_on %}Added on {{date}}, by{% endblocktrans %}
+                    <a href="#">SampleGuy</a></p>
+                <h3> {% trans "Note" %}: </h3>
                 <p>
                     {{object.note}}
                 </p>

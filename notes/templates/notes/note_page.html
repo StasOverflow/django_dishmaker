@@ -1,27 +1,26 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
 
     <div class="row ">
         <div class="col-9 offset-1 content-main">
-            <h2> Сreate a note for: {{name}}</h2>
+            <h2> {% trans "Сreate a note for" %}: {{name}}</h2>
             <hr>
-            <h4> Description: </h4>
+            <h4> {% trans 'Description' %}: </h4>
             <p>
                 {{description}}
             </p>
-            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
             <form action="{% url 'notes:create_note' %}" method="POST">
                 {% csrf_token %}
-                <h4> Your note goes here </h4>
+                <h4> {% trans "Your note goes here" %} </h4>
                 <textarea name="note" cols="70" rows="3"></textarea>
                 {{errors}}
                 <input type="hidden" value="{{ model_type }}" name="model_type">
                 <input type="hidden" value="{{ model_id }}" name="model_id">
                 <br>
                 <br>
-                <input class="btn btn-primary" type="submit" value="Apply Note">
+                <input class="btn btn-primary" type="submit" value="{% trans 'Apply Note' %}">
             </form>
             <br>
         </div>
