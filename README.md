@@ -13,14 +13,13 @@ How-to Guide:
     
 3. Here the database stuff will be explained (a bit later)
 
-
-
---------
+~~~
 To enable translations run:
 
     $ django-admin compilemessages -l ru
-    
--------
+
+~~~
+~~~
 To run celery app
 
 - update requirements:
@@ -33,3 +32,4 @@ To run celery app
 
    
     $ celery -A dishmaker worker --loglevel=info -B
+~~~

@@ -6,6 +6,7 @@ from .views import IngredientListView
 from .views import IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
 from .views import OrderListView
 from .views import OrderDetailView, OrderCreateView, OrderFromDish, OrderDeleteView, OrderUpdateView
+from dishmaker.api_view import DishList, IngredientsList, OrderList, NotesList
 
 app_name = 'dishmaker'
 
@@ -29,4 +30,9 @@ urlpatterns = [
     path('ingredient/add/', IngredientCreateView.as_view(), name='ing_add'),
     path('ingredient/update/<pk>/', IngredientUpdateView.as_view(), name='ing_update'),
     path('ingredient/delete/<pk>/', IngredientDeleteView.as_view(), name='ing_delete'),
+
+    path('api_dish_list/', DishList.as_view(), name='api_dish_list'),
+    path('api_order_list/', OrderList.as_view(), name='api_order_list'),
+    path('api_note_list/', NotesList.as_view(), name='api_note_list'),
+    path('api_ingredient_list/', IngredientsList.as_view(), name='api_ing_list'),
 ]
