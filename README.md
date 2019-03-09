@@ -12,3 +12,9 @@ How-to Guide:
     - type in your password
     
 3. Here the database stuff will be explained (a bit later)
+
+
+
+---
+To enable translations run
+    - $ django-admin compilemessages -l ru

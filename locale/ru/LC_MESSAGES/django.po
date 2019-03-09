@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 11:49+0200\n"
+"POT-Creation-Date: 2019-03-09 14:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "Зарегистрироваться как"
 
 #: accounts/templates/registration/login.html:5
 #: accounts/templates/registration/login.html:14
-#: dishmaker/templates/dishmaker/site_header.html:35
+#: dishmaker/templates/dishmaker/site_header.html:54
 msgid "Login"
 msgstr "Войти на сайт"
 
@@ -54,14 +54,6 @@ msgstr "Сначала выйдите с аккаунта"
 #: accounts/views.py:11
 msgid "Sign Up"
 msgstr "Регистрация"
-
-#: dish_composer/settings.py:111
-msgid "English"
-msgstr "Английский"
-
-#: dish_composer/settings.py:112
-msgid "Russian"
-msgstr "Русский"
 
 #: dishmaker/templates/dishmaker/base.html:21
 #: dishmaker/templates/dishmaker/content/content_header.html:4
@@ -207,15 +199,19 @@ msgstr "Заметки к заказам"
 msgid "Dish note list"
 msgstr "Заметки к блюдам"
 
-#: dishmaker/templates/dishmaker/site_header.html:22
+#: dishmaker/templates/dishmaker/site_header.html:36
+msgid "Set"
+msgstr "Установить"
+
+#: dishmaker/templates/dishmaker/site_header.html:41
 msgid "Hello"
 msgstr "Добро пожаловать"
 
-#: dishmaker/templates/dishmaker/site_header.html:28
+#: dishmaker/templates/dishmaker/site_header.html:47
 msgid "Logout"
 msgstr "Разлогиниться"
 
-#: dishmaker/templates/dishmaker/site_header.html:32
+#: dishmaker/templates/dishmaker/site_header.html:51
 msgid "Sing Up"
 msgstr "Зарегистрироваться"
 
@@ -288,11 +284,11 @@ msgstr "Список заметок"
 msgid "A note for: "
 msgstr "Заметка для "
 
-#: notes/views.py:65 notes/views.py:102
+#: notes/views.py:65 notes/views.py:103
 msgid "order"
 msgstr "заказа"
 
-#: notes/views.py:67 notes/views.py:104
+#: notes/views.py:67 notes/views.py:105
 msgid "dish"
 msgstr "блюда"
 
@@ -1457,6 +1453,12 @@ msgstr ""
 #: venv/lib/python3.6/site-packages/django/views/templates/default_urlconf.html:408
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "English"
+#~ msgstr "Английский"
+
+#~ msgid "Russian"
+#~ msgstr "Русский"
 
 #, fuzzy
 #~| msgid "Search"

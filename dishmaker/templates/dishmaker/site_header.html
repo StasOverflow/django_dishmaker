@@ -17,6 +17,25 @@
             {% endif %}
         </ul>
         <ul class="navbar-nav rigth-sequence ml-auto">
+            <li class="nav-item" >
+                <form action="{% url 'set_language' %}" style="width:300px; padding-top:5px;" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                           <!--worst practice ever, im sorry, im in hurry-->
+                    <input type="submit" class="nav-item log-button crud-button"
+                           style="padding:0px; margin:0px; margin-left:10px; width:120px;"
+                           value="{% trans 'Set' %}">
+                </form>
+            </li>
             {% if user.is_authenticated %}
                 <span class="navbar-text">
                     {% trans "Hello" %},
