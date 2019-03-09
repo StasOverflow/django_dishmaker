@@ -72,8 +72,12 @@ class NoteCreateView(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
             content_object = instance
             noted_item = NotedItem(content_object=content_object, note=note)
             noted_item.save()
-            reversing_string = 'notes:' + str(model_type)
-            success_url = reverse_lazy('notes:index')
+            model_string = ''
+            if model_type == 'Order':
+                model_string = 'order_notes'
+            elif model_type == 'Dish':
+                model_string = 'dish_notes'
+            reversing_string = 'notes:' + model_string
             return redirect(reversing_string)
         else:
             return self.render_to_response(context)
