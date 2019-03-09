@@ -85,7 +85,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -137,6 +136,21 @@ STATIC_ROOT = 'assets/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+# REDIS
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+# BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost'
+CELERY_RESULT_BACKEND = 'redis://localhost'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Oslo'
+
 
 try:
     from .settings_local import *
