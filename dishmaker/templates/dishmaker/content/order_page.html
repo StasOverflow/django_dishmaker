@@ -11,7 +11,7 @@
                     <li> {{name}} : {{quantity}} </li>
                 {% endfor %}
             </ul>
-            <p class="blog-post-meta">Ordered on {{object.created_on}}, by <a href="#">SampleGuy</a></p>
+            <p class="blog-post-meta">Ordered on {{object.created_on}}, by <a href="#">{{object.author}}</a></p>
             <hr>
         </div>
         {% if user.is_authenticated and user.is_active and user.is_staff %}

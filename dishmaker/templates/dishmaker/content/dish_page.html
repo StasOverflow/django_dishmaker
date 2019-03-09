@@ -14,7 +14,7 @@
                     <li> {{name}} : {{quantity}} </li>
                 {% endfor %}
             </ul>
-            <p class="blog-post-meta">Added on {{object.created_on}}, Chef: <a href="#">SampleGuy</a></p>
+            <p class="blog-post-meta">Added on {{object.created_on}}, Chef: <a href="#">{{object.author}}</a></p>
             <hr>
 
             {% if user.is_authenticated %}

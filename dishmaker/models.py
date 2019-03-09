@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.contenttypes.fields import GenericRelation
 from notes.models import NotedItem
+from django.contrib.auth.models import User
 
 
 class Ingredient(models.Model):
@@ -20,6 +21,7 @@ class Dish(models.Model):
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     created_on = models.DateTimeField(auto_now_add=True)
     notes = GenericRelation(NotedItem, related_query_name='dish')
+    author = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE)
 
     def __str__(self):
         output = str(self.name)
@@ -39,6 +41,7 @@ class Order(models.Model):
     description = models.TextField(null=True)
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     notes = GenericRelation(NotedItem, related_query_name='order')
+    author = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE)
 
     def __str__(self):
         output = 'Order: ' + str(self.id)

@@ -106,7 +106,9 @@ class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
         if form.is_valid():
 
             if formset.is_valid():
-                self.object = form.save()
+                self.object = form.save(commit=False)
+                self.object.author = self.request.user
+                self.object.save()
                 formset.instance = self.object
                 formset.save()
                 return super().form_valid(form)
@@ -306,7 +308,7 @@ class OrderCreateView(LoginRequiredMixin, TemplateView):
                                 )
 
         instance = self.model.objects.create(dish_id=Dish.objects.get(pk=request.POST.get('dish_id')),
-                                             description=request.POST.get('description'))
+                                             description=request.POST.get('description'), author=request.user)
 
         for ingred, quantity in ingredient_dict.items():
             ingredient_database_instance = Ingredient.objects.filter(name=ingred).first()

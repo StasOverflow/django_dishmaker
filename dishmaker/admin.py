@@ -20,7 +20,7 @@ class DishAdmin(admin.ModelAdmin):
     inlines = [
         DishRecipeIngredientInline,
     ]
-    list_display = ('name', 'description')
+    list_display = ('name', 'description', 'author')
 
 
 class IngredientAdmin(admin.ModelAdmin):
@@ -31,7 +31,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [
         OrderIngredientInline,
     ]
-    list_display = ('description', 'id')
+    list_display = ('description', 'id', 'author')
 
 
 admin.site.register(Dish, DishAdmin)
