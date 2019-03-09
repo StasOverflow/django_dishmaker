@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 11:34+0200\n"
+"POT-Creation-Date: 2019-03-09 11:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,14 +31,15 @@ msgstr "Клиент"
 
 #: accounts/forms.py:20
 msgid "Sign up as"
-msgstr "Войти как"
+msgstr "Зарегистрироваться как"
 
-#: accounts/templates/registration/login.html:13
+#: accounts/templates/registration/login.html:5
+#: accounts/templates/registration/login.html:14
 #: dishmaker/templates/dishmaker/site_header.html:35
 msgid "Login"
 msgstr "Войти на сайт"
 
-#: accounts/templates/registration/login.html:16
+#: accounts/templates/registration/login.html:18
 msgid "You are already logged in"
 msgstr "Вы уже вошли на сайт"
 
@@ -76,10 +77,12 @@ msgid "Dish list"
 msgstr "Блюда"
 
 #: dishmaker/templates/dishmaker/content/content_navbar.html:13
+#: dishmaker/views.py:168
 msgid "Ingredient list"
 msgstr "Ингридиенты"
 
 #: dishmaker/templates/dishmaker/content/content_navbar.html:21
+#: dishmaker/views.py:325
 msgid "Order list"
 msgstr "Заказы"
 
@@ -216,6 +219,42 @@ msgstr "Разлогиниться"
 msgid "Sing Up"
 msgstr "Зарегистрироваться"
 
+#: dishmaker/views.py:35
+msgid "Recipes list"
+msgstr "Список рецептов"
+
+#: dishmaker/views.py:85
+msgid "Add a Dish"
+msgstr "Добавить блюдо"
+
+#: dishmaker/views.py:125
+msgid "Update a Dish"
+msgstr "Обновить блюдо"
+
+#: dishmaker/views.py:154
+msgid "Remove a dish"
+msgstr "Удалить блюдо"
+
+#: dishmaker/views.py:197
+msgid "Add Ingredient"
+msgstr "Добавить ингридиент"
+
+#: dishmaker/views.py:212
+msgid "Update Ingredient"
+msgstr "Обновить ингридиент"
+
+#: dishmaker/views.py:227
+msgid "Remove ingredient"
+msgstr "Убрать ингридиент"
+
+#: dishmaker/views.py:364
+msgid "Remove an order"
+msgstr "Убрать заказ"
+
+#: dishmaker/views.py:378
+msgid "Update an order"
+msgstr "Обновить заказ"
+
 #: notes/templates/notes/note_list.html:9
 msgid "A note for"
 msgstr "Заметка для"
@@ -256,18 +295,6 @@ msgstr "заказа"
 #: notes/views.py:67 notes/views.py:104
 msgid "dish"
 msgstr "блюда"
-
-#: notes/views.py:84
-#, fuzzy
-#| msgid "Order note list"
-msgid "order_notes"
-msgstr "Заметки к заказам"
-
-#: notes/views.py:86
-#, fuzzy
-#| msgid "Dish note list"
-msgid "dish_notes"
-msgstr "Заметки к блюдам"
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content_base %}
 <div class="title">
-     Login
+     {% trans "Login" %}
 </div>
     <div class="row ">
         <div class="col-8 offset-2 content-main">
@@ -10,7 +10,9 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button class="btn btn-primary crud-button" style="width: 150px" type="submit">{% trans "Login" %}</button>
+                    <button class="btn btn-primary crud-button" style="width: 150px" type="submit">
+                        {% trans "Login" %}
+                    </button>
                 </form>
             {% else %}
                 {% trans "You are already logged in" %}!

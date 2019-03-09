@@ -79,11 +79,10 @@ class NoteCreateView(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
             content_object = instance
             noted_item = NotedItem(content_object=content_object, note=note)
             noted_item.save()
-            model_string = ''
             if model_type == 'Order':
-                model_string = _('order_notes')
+                model_string = 'order_notes'
             elif model_type == 'Dish':
-                model_string = _('dish_notes')
+                model_string = 'dish_notes'
             reversing_string = 'notes:' + model_string
             return redirect(reversing_string)
         else:
@@ -98,12 +97,12 @@ class NoteCreateView(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
         instance = model.objects.get(pk=model_id)
         model_name = instance.__str__()
 
+        model_string = ''
+
         if model_type == 'Order':
             model_string = _('order')
         elif model_type == 'Dish':
             model_string = _('dish')
-
-        model_string = ''
         context['title'] = str(self.title) + str(model_string)
         context['model_type'] = model_type
         context['model_id'] = model_id

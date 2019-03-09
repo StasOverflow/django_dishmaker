@@ -19,6 +19,7 @@ from django.db.models import Q
 from .utils import many_to_many_igredients_get
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils.translation import gettext_lazy as _
 
 
 class BaseKindaAbstractView(MultipleObjectMixin):
@@ -31,7 +32,7 @@ class BaseKindaAbstractView(MultipleObjectMixin):
 
 class DishListView(ListView, BaseKindaAbstractView):
     template_name = "dishmaker/content/index.html"
-    title = "Recipes list"
+    title = _("Recipes list")
     model = Dish
 
     def get_queryset(self):
@@ -81,7 +82,7 @@ class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     permission_required = "dishmaker.add_dish"
 
     model = Dish
-    title = "Add a Dish"
+    title = _("Add a Dish")
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:index')
 
@@ -121,7 +122,7 @@ class DishUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = "dishmaker.change_dish"
 
     model = Dish
-    title = "Update a Dish"
+    title = _("Update a Dish")
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:index')
 
@@ -131,6 +132,7 @@ class DishUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
             context['dish_formset'] = DishIngredientFormSet(self.request.POST, instance=self.object)
         else:
             context['dish_formset'] = DishIngredientFormSet(instance=self.object)
+            context['title'] = self.title
         return context
 
     def form_valid(self, form):
@@ -149,7 +151,7 @@ class DishDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     permission_required = "dishmaker.delete_dish"
 
     model = Dish
-    title = "Remove dish"
+    title = _("Remove a dish")
     success_url = reverse_lazy('dishmaker:index')
 
     def get_context_data(self, **kwargs):
@@ -163,7 +165,7 @@ class IngredientListView(PermissionRequiredMixin, LoginRequiredMixin, ListView, 
     permission_required = "dishmaker.view_ingredient"
 
     template_name = "dishmaker/content/ingredient_list.html"
-    title = "Ingredient list"
+    title = _("Ingredient list")
     model = Ingredient
 
     def get_context_data(self, **kwargs):
@@ -192,7 +194,7 @@ class IngredientCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateVi
     permission_required = "dishmaker.add_ingredient"
 
     model = Ingredient
-    title = "Add Ingredient"
+    title = _("Add Ingredient")
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:ingredient_list')
 
@@ -207,7 +209,7 @@ class IngredientUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVi
     permission_required = "dishmaker.change_ingredient"
 
     model = Ingredient
-    title = "Update Ingredient"
+    title = _("Update Ingredient")
     fields = ['name', 'description']
     success_url = reverse_lazy('dishmaker:ingredient_list')
 
@@ -222,7 +224,7 @@ class IngredientDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteVi
     permission_required = "dishmaker.delete_ingredient"
 
     model = Ingredient
-    title = "Remove ingredient"
+    title = _("Remove ingredient")
     success_url = reverse_lazy('dishmaker:ingredient_list')
 
     def get_context_data(self, **kwargs):
@@ -320,7 +322,7 @@ class OrderCreateView(LoginRequiredMixin, TemplateView):
 
 class OrderListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
     template_name = "dishmaker/content/order_list.html"
-    title = "Order list"
+    title = _("Order list")
     model = Order
 
     def get_context_data(self, **kwargs):
@@ -359,7 +361,7 @@ class OrderDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     permission_required = "dishmaker.delete_order"
 
     model = Order
-    title = "Remove an order"
+    title = _("Remove an order")
     success_url = reverse_lazy('dishmaker:order_list')
 
     def get_context_data(self, **kwargs):
@@ -373,7 +375,7 @@ class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = "dishmaker.change_order"
 
     model = Order
-    title = "Update an order"
+    title = _("Update an order")
     success_url = reverse_lazy('dishmaker:order_list')
     fields = ['dish_id', 'description']
 
@@ -383,6 +385,7 @@ class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
             context['order_formset'] = OrderIngredientFormSet(self.request.POST, instance=self.object)
         else:
             context['order_formset'] = OrderIngredientFormSet(instance=self.object)
+        context['title'] = self.title
         return context
 
     def form_valid(self, form):
