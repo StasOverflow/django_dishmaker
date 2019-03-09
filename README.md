@@ -32,4 +32,4 @@ To run celery app
 - run worker in a terminal
 
    
-    $ celery -A dishmaker worker --loglevel=info
+    $ celery -A dishmaker worker --loglevel=info -B
