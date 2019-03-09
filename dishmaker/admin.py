@@ -31,7 +31,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [
         OrderIngredientInline,
     ]
-    list_display = ('description', 'id', 'author')
+    list_display = ('id', 'description', 'author', 'is_active')
 
 
 admin.site.register(Dish, DishAdmin)
