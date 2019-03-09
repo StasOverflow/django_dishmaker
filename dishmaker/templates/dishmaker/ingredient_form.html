@@ -1,5 +1,5 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
     <div class="row ">
 
@@ -9,17 +9,16 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form.errors }}
-                <h5> Ingredients name: </h5>
+                <h5> {% trans "Ingredients name" %}: </h5>
                 {{ form.name }}
                 <br>
-                <h5> Insert description (optionally) </h5>
+                <h5> {% trans "Insert description" (optionally) %} </h5>
                 {{ form.description }}
                 <br>
                 <br>
-                <input class="btn btn-primary" type="submit" value="Save">
+                <input class="btn btn-primary" type="submit" value="{% trans 'Save' %}">
             </form>
             <br>
-            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
             <hr>
         </div>
     </div>

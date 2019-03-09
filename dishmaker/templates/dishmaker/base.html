@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -17,7 +18,7 @@
 
         <link href="{%static 'dishmaker/header.css'%}" rel="stylesheet">
         <link href="{%static 'dishmaker/content_header.css'%}" rel="stylesheet">
-        <title>Restaurantio</title>
+        <title>{% trans "Restaurantio" %}</title>
     </head>
     <body>
     {% include "dishmaker/site_header.html" %}

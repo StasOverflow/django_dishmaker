@@ -1,29 +1,30 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
 
     <div class="row ">
         <div class="col-9 offset-1 content-main">
-            <h4> An order for '{{object.dish_id.name}}' </h4>
-            <h5> That consists of: </h5>
+            <h4> {% trans "An order for" %} '{{object.dish_id.name}}' </h4>
+            <h5> {% trans "That consists of" %}: </h5>
             <ul style="list-style-type:circle;">
                 {% for name, quantity in ingredients.items %}
                     <li> {{name}} : {{quantity}} </li>
                 {% endfor %}
             </ul>
-            <p class="blog-post-meta">Ordered on {{object.created_on}}, by <a href="#">{{object.author}}</a></p>
+            <p class="blog-post-meta">{% blocktrans with date=object.created_on %}Ordered on {{date}}, by {%endblocktrans%}
+                <a href="#">{{object.author}}</a></p>
             <hr>
         </div>
         {% if user.is_authenticated and user.is_active and user.is_staff %}
         <div class="col-2">
             <div class="row">
                 <a href="{% url 'dishmaker:order_update' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Edit
+                    {% trans "Edit" %}
                 </a>
             </div>
             <div class="row">
                 <a href="{% url 'dishmaker:order_delete' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Delete
+                    {% trans "Delete" %}
                 </a>
             </div>
             <br>
@@ -32,7 +33,7 @@
                     <input type="hidden" value="{{ model_type }}" name="model_type">
                     <input type="hidden" value="{{ object.id }}" name="model_id">
                     <button class="btn btn-primary crud-button" type="submit">
-                        Note
+                        {% trans "Note" %}
                     </button>
                 </form>
             </div>

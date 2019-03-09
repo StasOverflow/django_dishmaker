@@ -1,11 +1,11 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
 
     <div class="row ">
 
         <div class="col-9 offset-1 content-main">
-            <h5> Desctiption: </h5>
+            <h5> {% trans "Desctiption" %}: </h5>
 
             <p> {{object.description}} </p>
             </ul>
@@ -15,12 +15,12 @@
         <div class="col-2">
             <div class="row">
                 <a href="{% url 'dishmaker:ing_update' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Edit
+                    {% trans "Edit" %}
                 </a>
             </div>
             <div class="row">
                 <a href="{% url 'dishmaker:ing_delete' object.id %}" type="button" class="btn btn-primary crud-button">
-                    Delete
+                    {% trans "Delete" %}
                 </a>
             </div>
         </div>

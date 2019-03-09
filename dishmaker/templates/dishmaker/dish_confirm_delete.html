@@ -1,13 +1,13 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
     <form method="post">
         {% csrf_token %}
         {{ form.errors }}
-        <h3> Please confirm deletion of "{{ object }}" </h3>
-        <input class="btn btn-primary crud-button" type="submit" value="Confirm">
+        <h3> {% trans "Please confirm deletion of" %} "{{ object }}" </h3>
+        <input class="btn btn-primary crud-button" type="submit" value="{% trans 'Confirm' %}">
         <a href="{% url 'dishmaker:dish_page' object.id %}" type="button" class="btn btn-primary crud-button">
-            Decline
+            {% trans "Decline" %}
         </a>
     </form>
 {% endblock %}

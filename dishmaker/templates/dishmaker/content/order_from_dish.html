@@ -1,5 +1,5 @@
 {% extends "dishmaker/content/content_base.html" %}
-
+{% load i18n %}
 {% block inner_context %}
 
     <div class="row ">
@@ -10,7 +10,7 @@
             <form action="{% url 'dishmaker:order_add' %} " method="POST">
                 {% endwith %}
                 {% csrf_token %}
-                <h5> Ordering for {{object.dish_id}}</h5>
+                <h5> {% trans "An order for" %} {{object.dish_id}}</h5>
                 <h5> Please select ingredients to insert into your dish: </h5>
                 <ul style="list-style-type:circle;">
                     {% for name, quantity in ingredients.items %}
@@ -22,11 +22,11 @@
                     <input type="hidden" value="{{ dish_id }}" name="dish_id">
                 </ul>
 
-                <h5> You may also add a decription to your order </h5>
+                <h5> {% trans "You may also add a decription to your order" %} </h5>
                 <textarea name="description" cols="60" rows="3"></textarea>
                 <br>
                 <br>
-                <input class="btn btn-primary" type="submit" value="Confirm">
+                <input class="btn btn-primary" type="submit" value="{% trans 'Confirm' %}">
             </form>
             <br>
             <hr>
