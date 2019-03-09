@@ -6,10 +6,10 @@
         {% for object in object_list %}
             <br>
             <div class="col-9 offset-1 content-main">
-                <h2> A note for: {{object.content_object}}</h2>
+                <h2> {% trans "A note for" %}: {{object.content_object}}</h2>
                 <hr>
                 <p class="blog-post-meta">
-                    {% blocktrans with date=object.created_on %}Added on {{date}}, by{% endblocktrans %}
+                    {% blocktrans with time=object.created_on %}Added on {{time}}, by{% endblocktrans %}
                     <a href="#">SampleGuy</a></p>
                 <h3> {% trans "Note" %}: </h3>
                 <p>
