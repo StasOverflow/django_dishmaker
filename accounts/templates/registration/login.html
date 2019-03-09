@@ -6,11 +6,15 @@
 </div>
     <div class="row ">
         <div class="col-8 offset-2 content-main">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Login</button>
-            </form>
+            {% if not user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Login</button>
+                </form>
+            {% else %}
+                You are already logged in!
+            {% endif %}
         </div>
     </div>
 {% endblock %}

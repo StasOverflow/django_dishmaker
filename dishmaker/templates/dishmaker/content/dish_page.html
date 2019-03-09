@@ -14,13 +14,16 @@
                     <li> {{name}} : {{quantity}} </li>
                 {% endfor %}
             </ul>
-            <p class="blog-post-meta">Added somewhen, by <a href="#">SampleGuy</a></p>
+            <p class="blog-post-meta">Added on {{object.created_on}}, Chef: <a href="#">SampleGuy</a></p>
             <hr>
 
+            {% if user.is_authenticated %}
             <a class="btn btn-primary" type="button" href="{% url 'dishmaker:order_from_dish' object.id %}">
                 Make an order
             </a>
+            {% endif %}
         </div>
+        {% if user.is_authenticated %}
         <div class="col-2">
             <div class="row">
                 <a href="{% url 'dishmaker:dish_update' object.id %}" type="button" class="btn btn-primary crud-button">
@@ -44,6 +47,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

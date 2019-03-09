@@ -5,6 +5,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'dishmaker:index' %}">Dish list</a>
       </li>
+      {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link icon-add" href="{% url 'dishmaker:dish_add' %}"><i class="fas fa-plus-square"></i></a>
       </li>
@@ -17,6 +18,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'dishmaker:order_list' %}">Order list</a>
       </li>
+    {% endif %}
     </ul>
     <form method='GET' action=""  class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">

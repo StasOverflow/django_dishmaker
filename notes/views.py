@@ -7,9 +7,10 @@ from .models import NotedItem
 from django.apps.registry import apps
 from .forms import NoteForm
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class NoteOrderListView(ListView):
+class NoteOrderListView(LoginRequiredMixin, ListView):
     model = NotedItem
     title = 'Note list'
     template_name = 'notes/note_list.html'
@@ -21,7 +22,7 @@ class NoteOrderListView(ListView):
         return context
 
 
-class NoteDishListView(ListView):
+class NoteDishListView(LoginRequiredMixin, ListView):
     model = NotedItem
     title = 'Note list'
     template_name = 'notes/note_list.html'
@@ -33,7 +34,7 @@ class NoteDishListView(ListView):
         return context
 
 
-class NoteCreateView(TemplateView):
+class NoteCreateView(LoginRequiredMixin, TemplateView):
     template_name = "notes/note_page.html"
     title = ""
     model = NotedItem

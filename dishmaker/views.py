@@ -17,6 +17,7 @@ from .forms import OrderIngredientFormSet
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from .utils import many_to_many_igredients_get
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class BaseKindaAbstractView(MultipleObjectMixin):
@@ -74,7 +75,7 @@ class DishDetailView(DetailView):
         return context
 
 
-class DishCreateView(CreateView):
+class DishCreateView(LoginRequiredMixin, CreateView):
     model = Dish
     title = "Add a Dish"
     fields = ['name', 'description']
@@ -109,7 +110,7 @@ class DishCreateView(CreateView):
                 return redirect(reverse('dishmaker:dish_add'))
 
 
-class DishUpdateView(UpdateView):
+class DishUpdateView(LoginRequiredMixin, UpdateView):
     model = Dish
     title = "Update a Dish"
     fields = ['name', 'description']
@@ -134,7 +135,7 @@ class DishUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class DishDeleteView(DeleteView):
+class DishDeleteView(LoginRequiredMixin, DeleteView):
     model = Dish
     title = "Remove dish"
     success_url = reverse_lazy('dishmaker:index')
@@ -145,7 +146,7 @@ class DishDeleteView(DeleteView):
         return context
 
 
-class IngredientListView(ListView, BaseKindaAbstractView):
+class IngredientListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
     template_name = "dishmaker/content/ingredient_list.html"
     title = "Ingredient list"
     model = Ingredient
@@ -157,7 +158,7 @@ class IngredientListView(ListView, BaseKindaAbstractView):
         return context
 
 
-class IngredientDetailView(DetailView):
+class IngredientDetailView(LoginRequiredMixin, DetailView):
     template_name = "dishmaker/content/ingredient_page.html"
     model = Ingredient
 
@@ -168,7 +169,7 @@ class IngredientDetailView(DetailView):
         return context
 
 
-class IngredientCreateView(CreateView):
+class IngredientCreateView(LoginRequiredMixin, CreateView):
     model = Ingredient
     title = "Add Ingredient"
     fields = ['name', 'description']
@@ -180,7 +181,7 @@ class IngredientCreateView(CreateView):
         return context
 
 
-class IngredientUpdateView(UpdateView):
+class IngredientUpdateView(LoginRequiredMixin, UpdateView):
     model = Ingredient
     title = "Update Ingredient"
     fields = ['name', 'description']
@@ -192,7 +193,7 @@ class IngredientUpdateView(UpdateView):
         return context
 
 
-class IngredientDeleteView(DeleteView):
+class IngredientDeleteView(LoginRequiredMixin, DeleteView):
     model = Ingredient
     title = "Remove ingredient"
     success_url = reverse_lazy('dishmaker:ingredient_list')
@@ -203,7 +204,7 @@ class IngredientDeleteView(DeleteView):
         return context
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     template_name = "dishmaker/content/order_page.html"
     title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
     model = Order
@@ -229,7 +230,7 @@ class OrderDetailView(DetailView):
         return context
 
 
-class OrderFromDish(TemplateView):
+class OrderFromDish(LoginRequiredMixin, TemplateView):
     template_name = "dishmaker/content/order_from_dish.html"
     title = "A dish name"   # Should be replaced inside 'get_context_data' with a dish title
     model = Dish
@@ -260,7 +261,7 @@ class OrderFromDish(TemplateView):
         return context
 
 
-class OrderCreateView(TemplateView):
+class OrderCreateView(LoginRequiredMixin, TemplateView):
     model = Order
     success_url = reverse_lazy('dishmaker:order_list')
 
@@ -290,7 +291,7 @@ class OrderCreateView(TemplateView):
         return redirect(self.success_url)
 
 
-class OrderListView(ListView, BaseKindaAbstractView):
+class OrderListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
     template_name = "dishmaker/content/order_list.html"
     title = "Order list"
     model = Order
@@ -326,7 +327,7 @@ class OrderListView(ListView, BaseKindaAbstractView):
         return context
 
 
-class OrderDeleteView(DeleteView):
+class OrderDeleteView(LoginRequiredMixin, DeleteView):
     model = Order
     title = "Remove an order"
     success_url = reverse_lazy('dishmaker:order_list')
@@ -337,7 +338,7 @@ class OrderDeleteView(DeleteView):
         return context
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     title = "Update an order"
     success_url = reverse_lazy('dishmaker:order_list')
