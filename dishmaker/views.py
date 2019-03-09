@@ -78,7 +78,7 @@ class DishDetailView(DetailView):
 
 class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.add_dish"
 
     model = Dish
     title = "Add a Dish"
@@ -118,7 +118,7 @@ class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 
 class DishUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.change_dish"
 
     model = Dish
     title = "Update a Dish"
@@ -146,7 +146,7 @@ class DishUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
 class DishDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.delete_dish"
 
     model = Dish
     title = "Remove dish"
@@ -160,7 +160,7 @@ class DishDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
 class IngredientListView(PermissionRequiredMixin, LoginRequiredMixin, ListView, BaseKindaAbstractView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.view_ingredient"
 
     template_name = "dishmaker/content/ingredient_list.html"
     title = "Ingredient list"
@@ -175,7 +175,7 @@ class IngredientListView(PermissionRequiredMixin, LoginRequiredMixin, ListView, 
 
 class IngredientDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.view_ingredient"
 
     template_name = "dishmaker/content/ingredient_page.html"
     model = Ingredient
@@ -189,7 +189,7 @@ class IngredientDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailVi
 
 class IngredientCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.add_ingredient"
 
     model = Ingredient
     title = "Add Ingredient"
@@ -204,7 +204,7 @@ class IngredientCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateVi
 
 class IngredientUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.change_ingredient"
 
     model = Ingredient
     title = "Update Ingredient"
@@ -219,7 +219,7 @@ class IngredientUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVi
 
 class IngredientDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.delete_ingredient"
 
     model = Ingredient
     title = "Remove ingredient"
@@ -356,7 +356,7 @@ class OrderListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
 
 class OrderDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.delete_order"
 
     model = Order
     title = "Remove an order"
@@ -370,7 +370,7 @@ class OrderDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
 class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
-    permission_required = ("is_staff", "is_superuser", )
+    permission_required = "dishmaker.change_order"
 
     model = Order
     title = "Update an order"
