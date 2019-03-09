@@ -34,7 +34,7 @@ class DishmakerUserCreationForm(UserCreationForm):
             ingredients_permissions = Permission.objects.filter(content_type=content_type)
             content_type = ContentType.objects.get_for_model(Order)
             order_permissions = Permission.objects.filter(content_type=content_type)
-            content_type = ContentType.objects.get_for_model(Order)
+            content_type = ContentType.objects.get_for_model(NotedItem)
             noted_permissions = Permission.objects.filter(content_type=content_type)
             for perm in dish_permissions:
                 user.user_permissions.add(perm)
@@ -44,6 +44,7 @@ class DishmakerUserCreationForm(UserCreationForm):
                 user.user_permissions.add(perm)
             for perm in noted_permissions:
                 user.user_permissions.add(perm)
+                print(perm.codename)
         if commit:
             user.save()
         return user
