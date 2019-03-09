@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 09:13+0300\n"
+"POT-Creation-Date: 2019-03-09 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,12 +220,12 @@ msgstr "Зарегистрироваться"
 #, fuzzy
 #| msgid "An order for"
 msgid "A note for"
-msgstr "Заказ для"
+msgstr "Заметка для"
 
 #: notes/templates/notes/note_list.html:12
-#, fuzzy, python-format
-msgid "Added on %(time)s, by"
-msgstr "Заказан %(time)s"
+#, python-format
+msgid "Added on %(date)s, by "
+msgstr "Добавлен %(date)s"
 
 #: notes/templates/notes/note_page.html:7
 msgid "Сreate a note for"
