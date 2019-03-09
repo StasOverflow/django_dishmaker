@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from .utils import many_to_many_igredients_get
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class BaseKindaAbstractView(MultipleObjectMixin):
@@ -75,7 +76,10 @@ class DishDetailView(DetailView):
         return context
 
 
-class DishCreateView(LoginRequiredMixin, CreateView):
+class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Dish
     title = "Add a Dish"
     fields = ['name', 'description']
@@ -110,7 +114,10 @@ class DishCreateView(LoginRequiredMixin, CreateView):
                 return redirect(reverse('dishmaker:dish_add'))
 
 
-class DishUpdateView(LoginRequiredMixin, UpdateView):
+class DishUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Dish
     title = "Update a Dish"
     fields = ['name', 'description']
@@ -135,7 +142,10 @@ class DishUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class DishDeleteView(LoginRequiredMixin, DeleteView):
+class DishDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Dish
     title = "Remove dish"
     success_url = reverse_lazy('dishmaker:index')
@@ -146,7 +156,10 @@ class DishDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
-class IngredientListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
+class IngredientListView(PermissionRequiredMixin, LoginRequiredMixin, ListView, BaseKindaAbstractView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     template_name = "dishmaker/content/ingredient_list.html"
     title = "Ingredient list"
     model = Ingredient
@@ -158,7 +171,10 @@ class IngredientListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
         return context
 
 
-class IngredientDetailView(LoginRequiredMixin, DetailView):
+class IngredientDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     template_name = "dishmaker/content/ingredient_page.html"
     model = Ingredient
 
@@ -169,7 +185,10 @@ class IngredientDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class IngredientCreateView(LoginRequiredMixin, CreateView):
+class IngredientCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Ingredient
     title = "Add Ingredient"
     fields = ['name', 'description']
@@ -181,7 +200,10 @@ class IngredientCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class IngredientUpdateView(LoginRequiredMixin, UpdateView):
+class IngredientUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Ingredient
     title = "Update Ingredient"
     fields = ['name', 'description']
@@ -193,7 +215,10 @@ class IngredientUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class IngredientDeleteView(LoginRequiredMixin, DeleteView):
+class IngredientDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Ingredient
     title = "Remove ingredient"
     success_url = reverse_lazy('dishmaker:ingredient_list')
@@ -327,7 +352,10 @@ class OrderListView(LoginRequiredMixin, ListView, BaseKindaAbstractView):
         return context
 
 
-class OrderDeleteView(LoginRequiredMixin, DeleteView):
+class OrderDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Order
     title = "Remove an order"
     success_url = reverse_lazy('dishmaker:order_list')
@@ -338,7 +366,10 @@ class OrderDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
-class OrderUpdateView(LoginRequiredMixin, UpdateView):
+class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+
+    permission_required = ("is_staff", "is_superuser", )
+
     model = Order
     title = "Update an order"
     success_url = reverse_lazy('dishmaker:order_list')

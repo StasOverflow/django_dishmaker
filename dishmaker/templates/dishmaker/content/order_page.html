@@ -14,6 +14,7 @@
             <p class="blog-post-meta">Ordered on {{object.created_on}}, by <a href="#">SampleGuy</a></p>
             <hr>
         </div>
+        {% if user.is_authenticated and user.is_active and user.is_staff %}
         <div class="col-2">
             <div class="row">
                 <a href="{% url 'dishmaker:order_update' object.id %}" type="button" class="btn btn-primary crud-button">
@@ -36,6 +37,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

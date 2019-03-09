@@ -4,7 +4,8 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'dishmaker:index' %}">Home page</a>
             </li>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user.is_active and user.is_staff %}
+
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'notes:order_notes' %}">Order note list</a>
             </li>
