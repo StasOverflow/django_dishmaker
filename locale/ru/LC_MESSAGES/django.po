@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 10:08+0200\n"
+"POT-Creation-Date: 2019-03-09 11:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -153,7 +153,7 @@ msgstr "Заказ"
 
 #: dishmaker/templates/dishmaker/content/order_list.html:17
 msgid "Ordered by"
-msgstr "Заказан"
+msgstr "Заказал"
 
 #: dishmaker/templates/dishmaker/content/order_page.html:8
 msgid "That consists of"
@@ -162,7 +162,7 @@ msgstr "Что состоит из"
 #: dishmaker/templates/dishmaker/content/order_page.html:14
 #, python-format
 msgid "Ordered on %(date)s, by "
-msgstr "Заказан %(date)s"
+msgstr "Заказан %(date)s, заказал"
 
 #: dishmaker/templates/dishmaker/dish_confirm_delete.html:7
 #: dishmaker/templates/dishmaker/ingredient_confirm_delete.html:7
@@ -217,23 +217,19 @@ msgid "Sing Up"
 msgstr "Зарегистрироваться"
 
 #: notes/templates/notes/note_list.html:9
-#, fuzzy
-#| msgid "An order for"
 msgid "A note for"
 msgstr "Заметка для"
 
 #: notes/templates/notes/note_list.html:12
 #, python-format
 msgid "Added on %(date)s, by "
-msgstr "Добавлен %(date)s"
+msgstr "Добавлен %(date)s, добавил"
 
 #: notes/templates/notes/note_page.html:7
 msgid "Сreate a note for"
 msgstr "Создать заметку для"
 
 #: notes/templates/notes/note_page.html:9
-#, fuzzy
-#| msgid "Desctiption"
 msgid "Description"
 msgstr "Описание"
 
@@ -244,6 +240,34 @@ msgstr "Здесь будет Ваша заметка"
 #: notes/templates/notes/note_page.html:23
 msgid "Apply Note"
 msgstr "Прикрепить"
+
+#: notes/views.py:20 notes/views.py:35
+msgid "Note list"
+msgstr "Список заметок"
+
+#: notes/views.py:50
+msgid "A note for: "
+msgstr "Заметка для "
+
+#: notes/views.py:65 notes/views.py:102
+msgid "order"
+msgstr "заказа"
+
+#: notes/views.py:67 notes/views.py:104
+msgid "dish"
+msgstr "блюда"
+
+#: notes/views.py:84
+#, fuzzy
+#| msgid "Order note list"
+msgid "order_notes"
+msgstr "Заметки к заказам"
+
+#: notes/views.py:86
+#, fuzzy
+#| msgid "Dish note list"
+msgid "dish_notes"
+msgstr "Заметки к блюдам"
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
