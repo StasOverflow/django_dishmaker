@@ -16,12 +16,20 @@ How-to Guide:
 
 
 --------
-To enable translations run
-    - $ django-admin compilemessages -l ru
+To enable translations run:
+
+    $ django-admin compilemessages -l ru
     
 -------
 To run celery app
-   1. Update pip dependencies:
-      - $ pip install -r requirements.txt
+
+- update requirements:
+
+      
+    $ pip install -r requirements.txt
    
-        
+
+- run worker in a terminal
+
+   
+    $ celery -A dishmaker worker --loglevel=info
