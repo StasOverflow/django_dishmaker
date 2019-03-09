@@ -1,18 +1,19 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 
 class DishmakerUserCreationForm(UserCreationForm):
 
-    CHOICES = [('Chef', 'Chef'),
-               ('Customer', 'Customer')]
+    CHOICES = [('Chef', _('Chef')),
+               ('Customer', _('Customer'))]
 
     sign_up_as = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["sign_up_as"].label = "Sign up as"
+        self.fields["sign_up_as"].label = _("Sign up as")
 
     class Meta:
         model = User

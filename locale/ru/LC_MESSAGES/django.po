@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-09 07:22+0300\n"
+"POT-Creation-Date: 2019-03-09 07:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,40 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: accounts/forms.py:9 dishmaker/templates/dishmaker/content/dish_page.html:17
+#: dishmaker/templates/dishmaker/content/index.html:16
+msgid "Chef"
+msgstr "Шеф-повар"
+
+#: accounts/forms.py:10
+msgid "Customer"
+msgstr "Клиент"
+
+#: accounts/forms.py:16
+msgid "Sign up as"
+msgstr "Войти как"
+
+#: accounts/templates/registration/login.html:13
+#: dishmaker/templates/dishmaker/site_header.html:35
+msgid "Login"
+msgstr "Войти на сайт"
+
+#: accounts/templates/registration/login.html:16
+msgid "You are already logged in"
+msgstr "Вы уже вошли на сайт"
+
+#: accounts/templates/registration/sign_up_page.html:13
+msgid "Sign up"
+msgstr "Регистрация"
+
+#: accounts/templates/registration/sign_up_page.html:16
+msgid "Logout from your account first"
+msgstr "Сначала выйдите с аккаунта"
+
+#: accounts/views.py:11
+msgid "Sign Up"
+msgstr "Регистрация"
 
 #: dish_composer/settings.py:111
 msgid "English"
@@ -71,11 +105,6 @@ msgstr "Состоит из"
 #: dishmaker/templates/dishmaker/content/dish_page.html:17
 msgid "Added on"
 msgstr "Добавлен"
-
-#: dishmaker/templates/dishmaker/content/dish_page.html:17
-#: dishmaker/templates/dishmaker/content/index.html:16
-msgid "Chef"
-msgstr "Шеф-повар"
 
 #: dishmaker/templates/dishmaker/content/dish_page.html:24
 msgid "Make an order"
@@ -183,10 +212,6 @@ msgstr "Разлогиниться"
 #: dishmaker/templates/dishmaker/site_header.html:32
 msgid "Sing Up"
 msgstr "Зарегистрироваться"
-
-#: dishmaker/templates/dishmaker/site_header.html:35
-msgid "Login"
-msgstr "Войти на сайт"
 
 #: venv/lib/python3.6/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"

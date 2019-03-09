@@ -1,5 +1,5 @@
 {% extends 'dishmaker/base.html' %}
-
+{% load i18n %}
 {% block content_base %}
 <div class="title">
      Login
@@ -10,10 +10,10 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">Login</button>
+                    <button class="btn btn-primary crud-button" style="width: 150px" type="submit">{% trans "Login" %}</button>
                 </form>
             {% else %}
-                You are already logged in!
+                {% trans "You are already logged in" %}!
             {% endif %}
         </div>
     </div>
