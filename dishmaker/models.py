@@ -42,6 +42,7 @@ class Order(models.Model):
     ingredients = models.ManyToManyField(Ingredient, through='IngredientQuantityInDishProxy')  # Won't be shown
     notes = GenericRelation(NotedItem, related_query_name='order')
     author = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         output = 'Order: ' + str(self.id)

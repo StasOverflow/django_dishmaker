@@ -6,7 +6,7 @@
 
         <div class="col-9 offset-1 content-main">
             {% for order_dict in order_list %}
-            <div class="blog-post">
+            <div class="blog-post"  style="{% if order_dict.order.is_avtive %} opacity:0.5;{% endif %}">
                 <hr>
                 <h4 class="blog-post-title">
                     <a href="{% url 'dishmaker:order_page' order_dict.order.id %}">
