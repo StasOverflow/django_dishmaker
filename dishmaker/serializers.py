@@ -73,15 +73,25 @@ class OrderSerializer(serializers.ModelSerializer):
         return order
 
 
+class ContentTypeField(serializers.RelatedField):
+
+    def to_representation(self, value):
+        if isinstance(value, Dish):
+            return 'Dish: ' + value.name
+        elif isinstance(value, Order):
+            return 'Order: ' + str(value.id)
+        raise Exception('Unexpected type of tagged object')
+
+
 class NotedItemSerializer(serializers.ModelSerializer):
 
     class NoteObjectRelatedField(serializers.RelatedField):
 
         def to_representation(self, value):
             if isinstance(value, Dish):
-                return 'Bookmark: ' + value.name
+                return DishSerializer(value).data
             elif isinstance(value, Order):
-                return 'Note: ' + str(value.id)
+                return OrderSerializer(value).data
             raise Exception('Unexpected type of tagged object')
 
     content_object = NoteObjectRelatedField(read_only=True)
