@@ -21,6 +21,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     """
     Sample text on top
     """
+    lookup_field = 'name'
     queryset = Ingredient.objects.all()
     serializer_class = IngredientsSerializer
 
