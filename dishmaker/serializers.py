@@ -2,6 +2,7 @@ from rest_framework import serializers
 from dishmaker.models import Order, Dish, Ingredient, IngredientQuantityInDishProxy
 from notes.models import NotedItem
 from rest_framework.serializers import RelatedField
+from django.contrib.auth.models import User
 
 
 class IngredientsSerializer(serializers.ModelSerializer):
@@ -21,7 +22,9 @@ class IngredientQuantitySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DishSerializer(serializers.ModelSerializer):
+
     ingredients = IngredientQuantitySerializer(source='dishrecipe', many=True)
+    author = serializers.PrimaryKeyRelatedField(source='author.name', queryset=User.objects.all())
 
     class Meta:
         model = Dish
@@ -42,9 +45,34 @@ class DishSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+
+    class AuthorRelatedField(serializers.PrimaryKeyRelatedField):
+
+        def to_representation(self, value):
+            if value is not None:
+                return value.name
+            else:
+                return None
+
+    ingredients = IngredientQuantitySerializer(source='order', many=True)
+    dish_id = serializers.PrimaryKeyRelatedField(source='dish_id.name', queryset=Dish.objects.all())
+    author = AuthorRelatedField(source='author.name', queryset=User.objects.all())
+
     class Meta:
         model = Order
-        fields = ('id', 'description', 'ingredients', 'created_on', 'author', 'is_active')
+        fields = ('id', 'dish_id', 'description', 'ingredients', 'created_on', 'author', 'is_active')
+
+    def create(self, validated_data):
+        ings_data = validated_data.pop('dishrecipe')
+        order = Order.objects.create(**validated_data)
+        for ing in ings_data:
+            name = ing.get('ingredient_id').get('name')
+            quantity = ing.get('ingredient_quantity')
+            ingredient_database_instance = Ingredient.objects.filter(name=name).first()
+            '''order here is a related name'''
+            order.order.create(ingredient_id=ingredient_database_instance,
+                               ingredient_quantity=quantity)
+        return order
 
 
 class NotedItemSerializer(serializers.ModelSerializer):
