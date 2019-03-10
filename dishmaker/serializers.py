@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class IngredientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ('name', 'description', 'created_on')
+        fields = ('id', 'name', 'description', 'created_on')
 
 
 class IngredientQuantitySerializer(serializers.HyperlinkedModelSerializer):
@@ -18,13 +18,16 @@ class IngredientQuantitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = IngredientQuantityInDishProxy
 
-        fields = ('name', 'ingredient_quantity')
+        fields = ('id', 'name', 'ingredient_quantity')
 
 
 class AuthorRelatedField(RelatedField):
 
     def to_representation(self, value):
         return value.username
+
+    def to_internal_value(self, data):
+        return User.objects.get(username=data)
 
 
 class DishSerializer(serializers.ModelSerializer):
@@ -34,7 +37,7 @@ class DishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dish
-        fields = ('name', 'description', 'ingredients', 'created_on', 'author')
+        fields = ('id', 'name', 'description', 'ingredients', 'created_on', 'author')
 
     def create(self, validated_data):
         ings_data = validated_data.pop('dishrecipe')
@@ -98,4 +101,4 @@ class NotedItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NotedItem
-        fields = ('note', 'content_type', 'object_id', 'content_object', 'created_on')
+        fields = ('id', 'note', 'content_type', 'object_id', 'content_object', 'created_on')

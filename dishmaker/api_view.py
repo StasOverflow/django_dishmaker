@@ -5,33 +5,40 @@ from rest_framework import renderers
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
+from rest_framework import permissions
+from dishmaker.permissions import IsOwnerOrReadOnly
 from dishmaker.serializers import DishSerializer, IngredientsSerializer, OrderSerializer, NotedItemSerializer
 
 
 class DishViewSet(viewsets.ModelViewSet):
+
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
+
     """
     Sample text on top
     """
-    lookup_field = 'name'
     queryset = Ingredient.objects.all()
     serializer_class = IngredientsSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
 
 
 class NoteViewSet(viewsets.ModelViewSet):
+
     queryset = NotedItem.objects.all()
     serializer_class = NotedItemSerializer
 
