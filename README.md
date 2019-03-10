@@ -33,3 +33,13 @@ To run celery app
    
     $ celery -A dishmaker worker --loglevel=info -B
 ~~~
+-------
+Create tokens for previous Users:
+~~~
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+for user in User.objects.all():
+    Token.objects.get_or_create(user=user)
+~~~
+

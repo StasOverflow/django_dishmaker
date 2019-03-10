@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.authtoken import views
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -22,4 +23,5 @@ urlpatterns = [
     path('', include('dishmaker.urls'), name='home_page'),
     path('notes/', include('notes.urls')),
     path('accounts/', include('accounts.urls')),
+    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth')
 ]
