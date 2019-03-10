@@ -6,9 +6,18 @@ from .views import IngredientListView
 from .views import IngredientDetailView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
 from .views import OrderListView
 from .views import OrderDetailView, OrderCreateView, OrderFromDish, OrderDeleteView, OrderUpdateView
-from dishmaker.api_view import DishList, IngredientsList, OrderList, NotesList
+
+from rest_framework import routers
+from dishmaker.api_view import DishViewSet, NoteViewSet, OrderViewSet, IngredientViewSet
+
 
 app_name = 'dishmaker'
+
+router = routers.SimpleRouter()
+router.register(r'dishes', DishViewSet)
+router.register(r'notes', NoteViewSet)
+router.register(r'ingredients', IngredientViewSet)
+router.register(r'orders', OrderViewSet)
 
 urlpatterns = [
     path('', DishListView.as_view(), name='index'),
@@ -31,8 +40,10 @@ urlpatterns = [
     path('ingredient/update/<pk>/', IngredientUpdateView.as_view(), name='ing_update'),
     path('ingredient/delete/<pk>/', IngredientDeleteView.as_view(), name='ing_delete'),
 
-    path('api_dish_list/', DishList.as_view(), name='api_dish_list'),
-    path('api_order_list/', OrderList.as_view(), name='api_order_list'),
-    path('api_note_list/', NotesList.as_view(), name='api_note_list'),
-    path('api_ingredient_list/', IngredientsList.as_view(), name='api_ing_list'),
+    # path('api_dish_list/', DishList.as_view(), name='api_dish_list'),
+    # path('api_order_list/', OrderList.as_view(), name='api_order_list'),
+    # path('api_note_list/', NotesList.as_view(), name='api_note_list'),
+    # path('api_ingredient_list/', IngredientsList.as_view(), name='api_ing_list'),
 ]
+
+urlpatterns += router.urls
