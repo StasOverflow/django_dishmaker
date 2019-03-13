@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('form_an_order/<int:dish_id>', OrderFromDish.as_view(), name='order_from_dish'),
 
-    path('order_list', OrderListView.as_view(), name='order_list'),
+    path('order_list/', OrderListView.as_view(), name='order_list'),
     path('order_page/<pk>', OrderDetailView.as_view(), name='order_page'),
     path('order_page/add/', OrderCreateView.as_view(), name='order_add'),
     path('order_page/update/<pk>', OrderUpdateView.as_view(), name='order_update'),
