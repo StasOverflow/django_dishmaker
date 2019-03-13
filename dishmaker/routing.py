@@ -1,8 +1,7 @@
-# chat/routing.py
-from django.urls import path
+from django.conf.urls import url
 
-from dishmaker import consumers
+from . import consumers
 
 websocket_urlpatterns = [
-    path('ws/', consumers.PageUpdateConsumer),
+    url(r'^ws/order_list/$', consumers.TestConsumer),
 ]
