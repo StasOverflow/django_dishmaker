@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dishmaker',
     'notes',
     'accounts',
+    'chat',
 
     'channels',
 
