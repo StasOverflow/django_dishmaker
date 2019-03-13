@@ -20,6 +20,8 @@ from .utils import many_to_many_igredients_get
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils.translation import gettext_lazy as _
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class BaseKindaAbstractView(MultipleObjectMixin):
@@ -60,6 +62,7 @@ class DishListView(ListView, BaseKindaAbstractView):
                 recipe_list.append(dish_dict)
 
         context['recipes_list'] = recipe_list
+        # new_one = PageUpdateConsumer()
         return context
 
 
@@ -112,6 +115,16 @@ class DishCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
                 self.object.save()
                 formset.instance = self.object
                 formset.save()
+                layer = get_channel_layer()
+                async_to_sync(layer.group_send)(
+                    'main_page_viewers',
+                    {
+                        'type': 'chat_message',
+                        'message': 'update_page'
+                    }
+                )
+                # async_to_sync(layer.group_send)('events', {'type': 'test'})
+                print('should trigger')
                 return super().form_valid(form)
             else:
                 return redirect(reverse('dishmaker:dish_add'))

@@ -11,10 +11,12 @@
     socketUpdater.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
-        document.querySelector('#chat-log').value += (message + '\n');
+        if (message == 'update_page') {
+            location.reload();
+        }
     };
 
-    chatSocket.onclose = function(e) {
+    socketUpdater.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
 </script>
