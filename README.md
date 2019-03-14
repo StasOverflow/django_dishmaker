@@ -25,8 +25,8 @@ To enable translations run:
     $ django-admin compilemessages -l ru
 
 ~~~
-~~~
 To run celery app
+~~~
 
 - update requirements:
     $ pip install -r requirements.txt
@@ -44,3 +44,4 @@ from rest_framework.authtoken.models import Token
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 ~~~
+-------

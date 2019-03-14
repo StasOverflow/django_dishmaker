@@ -2,13 +2,15 @@ from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from celery.schedules import crontab
+from dish_composer.settings import BROKER_URL
+from dish_composer.settings import CELERY_RESULT_BACKEND
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dish_composer.settings')
 
-app = Celery('pyFormers',
-             backend='redis://localhost',
-             broker='redis://localhost')
+app = Celery('dishmaker',
+             backend=CELERY_RESULT_BACKEND,
+             broker=BROKER_URL)
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
