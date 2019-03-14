@@ -11,7 +11,13 @@ How-to Guide:
     - type in your email (can be skipped)
     - type in your password
     
-3. Here the database stuff will be explained (a bit later)
+3. Here the database stuff will be explained (a bit later):
+    - do something
+    - do something else
+
+4. Setup environment variables:
+    - $ . .env-non-docker
+
 
 ~~~
 To enable translations run:
@@ -23,14 +29,10 @@ To enable translations run:
 To run celery app
 
 - update requirements:
-
-      
     $ pip install -r requirements.txt
-   
 
-- run worker in a terminal
-
-   
+- run worker in a terminal 
+  (dont forget to setup env variables in every new terminal)
     $ celery -A dishmaker worker --loglevel=info -B
 ~~~
 -------
@@ -42,4 +44,3 @@ from rest_framework.authtoken.models import Token
 for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 ~~~
-

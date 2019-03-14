@@ -78,6 +78,15 @@ TEMPLATES = [
     },
 ]
 
+REDIS_ENV_HOST = os.getenv('REDIS_HOST')
+REDIS_ENV_PORT = os.getenv('REDIS_PORT')
+
+POSTGRES_ENV_HOST = os.getenv('POSTGRES_HOST')
+POSTGRES_ENV_PORT = os.getenv('POSTGRES_PORT')
+POSTGRES_ENV_DB_NAME = os.getenv('POSTGRES_DB_NAME')
+POSTGRES_ENV_DB_USER = os.getenv('POSTGRES_DB_USER')
+POSTGRES_ENV_DB_PASS = os.getenv('POSTGRES_DB_PASS')
+
 WSGI_APPLICATION = 'dish_composer.wsgi.application'
 
 ASGI_APPLICATION = "dish_composer.routing.application"
@@ -86,7 +95,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(REDIS_ENV_HOST, REDIS_ENV_PORT)],
         },
     },
 }
@@ -95,10 +104,20 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': POSTGRES_ENV_DB_NAME,
+        'USER': POSTGRES_ENV_DB_USER,
+        'PASSWORD': POSTGRES_ENV_DB_PASS,
+        'HOST': POSTGRES_ENV_HOST,
+        'PORT': POSTGRES_ENV_PORT,
     }
 }
 
@@ -166,20 +185,19 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 # REDIS
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6379'
-# BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+REDIS_HOST = REDIS_ENV_HOST
+REDIS_PORT = REDIS_ENV_PORT
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost'
-CELERY_RESULT_BACKEND = 'redis://localhost'
+BROKER_URL = 'redis://' + REDIS_HOST
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Oslo'
 
 
-try:
-    from .settings_local import *
-except ImportError as e:
-    print(e)
+# try:
+#     from .settings_local import *
+# except ImportError as e:
+#     print(e)
