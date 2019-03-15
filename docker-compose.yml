@@ -3,10 +3,15 @@ services:
   web:
     build: .
     volumes:
-      - "./app"
+      - "/app"
     ports:
      - "8000:8000"
     links:
       - "redis"
+      - "postgres"
+    env_file:
+      ".env"
   redis:
     image: "redis"
+  postgres:
+    image: "postgres"
