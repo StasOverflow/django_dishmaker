@@ -2,7 +2,11 @@ version: '3'
 services:
   web:
     build: .
+    volumes:
+      - "./app"
     ports:
      - "8000:8000"
+    links:
+      - "redis"
   redis:
-    image: "redis:alpine"
+    image: "redis"
