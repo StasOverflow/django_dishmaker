@@ -24,6 +24,6 @@ RUN .
 
 EXPOSE 8000
 
-#CMD ["python3", "manage.py", "runserver"]
+CMD ["./docker-entrypoint.sh"]
 
 ENV PYTHONUNBUFFERED 1
