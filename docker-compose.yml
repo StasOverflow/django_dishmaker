@@ -10,8 +10,17 @@ services:
       - "redis"
       - "postgres"
     env_file:
-      ".env"
+      - ".env"
   redis:
     image: "redis"
   postgres:
     image: "postgres"
+  celery:
+    build: .
+    command: celery -A dishmaker worker --loglevel=info -B
+    volumes:
+      - "/app"
+    depends_on:
+      - "redis"
+    env_file:
+      - ".env"
