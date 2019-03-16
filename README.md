@@ -45,3 +45,9 @@ for user in User.objects.all():
     Token.objects.get_or_create(user=user)
 ~~~
 -------
+To create dev server image (with empty postgres db):
+(accessed via 127.0.0.1:8000)
+~~~
+$ docker-compose build
+$ docker-compose up
+~~~

@@ -11,6 +11,7 @@ services:
       - "postgres"
     env_file:
       - ".env"
+    command: "./docker-entrypoint.sh"
   redis:
     image: "redis"
   postgres:

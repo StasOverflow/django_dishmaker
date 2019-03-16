@@ -24,6 +24,4 @@ RUN .
 
 EXPOSE 8000
 
-CMD ["./docker-entrypoint.sh"]
-
 ENV PYTHONUNBUFFERED 1
