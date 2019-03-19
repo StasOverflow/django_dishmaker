@@ -10,7 +10,7 @@
         <a class="nav-link icon-add" href="{% url 'dishmaker:dish_add' %}"><i class="fas fa-plus-square"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'dishmaker:ingredient_list' %}">{% trans "Ingredient list" %}</a>
+        <a class="nav-link" href="{% url 'dishmaker:ingredient_list_page' %}">{% trans "Ingredient list" %}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link icon-add" href="{% url 'dishmaker:ing_add' %}"><i class="fas fa-plus-square"></i></a>
@@ -18,7 +18,7 @@
     {% endif %}
     {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'dishmaker:order_list' %}">{% trans "Order list" %}</a>
+        <a class="nav-link" href="{% url 'dishmaker:order_list_page' %}">{% trans "Order list" %}</a>
       </li>
     {% endif %}
     </ul>

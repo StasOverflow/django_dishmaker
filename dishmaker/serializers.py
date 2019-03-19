@@ -3,6 +3,7 @@ from dishmaker.models import Order, Dish, Ingredient, IngredientQuantityInDishPr
 from notes.models import NotedItem
 from rest_framework.serializers import RelatedField
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 
 
 class IngredientsSerializer(serializers.ModelSerializer):
@@ -77,28 +78,31 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class ContentTypeField(serializers.RelatedField):
+    def to_representation(self, value):
+        value = value.model_class()
+        if value is Dish:
+            return 'Dish'
+        elif value is Order:
+            return 'Order'
+        raise Exception('Unexpected type of tagged object which is', value)
 
+
+class NoteObjectRelatedField(serializers.RelatedField):
     def to_representation(self, value):
         if isinstance(value, Dish):
-            return 'Dish: ' + value.name
+            return DishSerializer(value).data
         elif isinstance(value, Order):
-            return 'Order: ' + str(value.id)
-        raise Exception('Unexpected type of tagged object')
+            print('WE ARE ORDER')
+            return OrderSerializer(value).data
+        raise Exception('Unexpected type of tagged object which is', value)
 
 
 class NotedItemSerializer(serializers.ModelSerializer):
 
-    class NoteObjectRelatedField(serializers.RelatedField):
-
-        def to_representation(self, value):
-            if isinstance(value, Dish):
-                return DishSerializer(value).data
-            elif isinstance(value, Order):
-                return OrderSerializer(value).data
-            raise Exception('Unexpected type of tagged object')
-
-    content_object = NoteObjectRelatedField(read_only=True)
+    content_type = ContentTypeField(read_only=True)
+    # content_object = NoteObjectRelatedField(read_only=True)
 
     class Meta:
         model = NotedItem
-        fields = ('id', 'note', 'content_type', 'object_id', 'content_object', 'created_on')
+        fields = ('id', 'note', 'content_type', 'object_id', 'created_on')
+        # Content object cant be rendered

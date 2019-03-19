@@ -42,7 +42,7 @@ class Order(models.Model):
     dish_id = models.ForeignKey(
                             Dish,
                             related_name="dish",
-                            on_delete=models.SET_NULL,
+                            on_delete=models.CASCADE,
                             blank=True,
                             null=True,
                             default=None,

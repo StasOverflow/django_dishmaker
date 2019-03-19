@@ -14,10 +14,10 @@ from dishmaker.api_view import DishViewSet, NoteViewSet, OrderViewSet, Ingredien
 app_name = 'dishmaker'
 
 router = routers.SimpleRouter()
-router.register(r'dishes', DishViewSet)
-router.register(r'notes', NoteViewSet)
-router.register(r'ingredients', IngredientViewSet)
-router.register(r'orders', OrderViewSet)
+router.register(r'api_dishes', DishViewSet)
+router.register(r'api_notes', NoteViewSet)
+router.register(r'api_ingredients', IngredientViewSet)
+router.register(r'api_orders', OrderViewSet)
 
 urlpatterns = [
     path('', DishListView.as_view(), name='index'),
@@ -28,13 +28,13 @@ urlpatterns = [
 
     path('form_an_order/<int:dish_id>', OrderFromDish.as_view(), name='order_from_dish'),
 
-    path('order_list/', OrderListView.as_view(), name='order_list'),
+    path('order_list/', OrderListView.as_view(), name='order_list_page'),
     path('order_page/<pk>', OrderDetailView.as_view(), name='order_page'),
     path('order_page/add/', OrderCreateView.as_view(), name='order_add'),
     path('order_page/update/<pk>', OrderUpdateView.as_view(), name='order_update'),
     path('order_page/delete/<pk>', OrderDeleteView.as_view(), name='order_delete'),
 
-    path('ingredient/', IngredientListView.as_view(), name='ingredient_list'),
+    path('ingredient/', IngredientListView.as_view(), name='ingredient_list_page'),
     path('ingredient/<pk>', IngredientDetailView.as_view(), name='ingredient'),
     path('ingredient/add/', IngredientCreateView.as_view(), name='ing_add'),
     path('ingredient/update/<pk>/', IngredientUpdateView.as_view(), name='ing_update'),

@@ -209,7 +209,7 @@ class IngredientCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateVi
     model = Ingredient
     title = _("Add Ingredient")
     fields = ['name', 'description']
-    success_url = reverse_lazy('dishmaker:ingredient_list')
+    success_url = reverse_lazy('dishmaker:ingredient_list_page')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -224,7 +224,7 @@ class IngredientUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateVi
     model = Ingredient
     title = _("Update Ingredient")
     fields = ['name', 'description']
-    success_url = reverse_lazy('dishmaker:ingredient_list')
+    success_url = reverse_lazy('dishmaker:ingredient_list_page')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -238,7 +238,7 @@ class IngredientDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteVi
 
     model = Ingredient
     title = _("Remove ingredient")
-    success_url = reverse_lazy('dishmaker:ingredient_list')
+    success_url = reverse_lazy('dishmaker:ingredient_list_page')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -305,7 +305,7 @@ class OrderFromDish(LoginRequiredMixin, TemplateView):
 
 class OrderCreateView(LoginRequiredMixin, TemplateView):
     model = Order
-    success_url = reverse_lazy('dishmaker:order_list')
+    success_url = reverse_lazy('dishmaker:order_list_page')
 
     blacklist = ('csrfmiddlewaretoken', 'description', 'dish_id')
 
@@ -375,7 +375,7 @@ class OrderDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
 
     model = Order
     title = _("Remove an order")
-    success_url = reverse_lazy('dishmaker:order_list')
+    success_url = reverse_lazy('dishmaker:order_list_page')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -389,7 +389,7 @@ class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
     model = Order
     title = _("Update an order")
-    success_url = reverse_lazy('dishmaker:order_list')
+    success_url = reverse_lazy('dishmaker:order_list_page')
     fields = ['dish_id', 'description']
 
     def get_context_data(self, **kwargs):
