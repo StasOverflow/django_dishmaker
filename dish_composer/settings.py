@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -78,14 +79,19 @@ TEMPLATES = [
     },
 ]
 
-REDIS_ENV_HOST = os.getenv('REDIS_HOST')
-REDIS_ENV_PORT = os.getenv('REDIS_PORT')
+try:
+    REDIS_ENV_HOST = os.environ['REDIS_HOST']
+    REDIS_ENV_PORT = os.environ['REDIS_PORT']
 
-POSTGRES_ENV_HOST = os.getenv('POSTGRES_HOST')
-POSTGRES_ENV_PORT = os.getenv('POSTGRES_PORT')
-POSTGRES_ENV_DB_NAME = os.getenv('POSTGRES_DB_NAME')
-POSTGRES_ENV_DB_USER = os.getenv('POSTGRES_DB_USER')
-POSTGRES_ENV_DB_PASS = os.getenv('POSTGRES_DB_PASS')
+    POSTGRES_ENV_HOST = os.environ['POSTGRES_HOST']
+    POSTGRES_ENV_PORT = os.environ['POSTGRES_PORT']
+    POSTGRES_ENV_DB_NAME = os.environ['POSTGRES_DB_NAME']
+    POSTGRES_ENV_DB_USER = os.environ['POSTGRES_DB_USER']
+    POSTGRES_ENV_DB_PASS = os.environ['POSTGRES_DB_PASS']
+except KeyError as e:
+    print(e, 'Environment variables missing')
+    print('If you are not using docker, run\n $ . .env-non-docker\n and restart app')
+    sys.exit()
 
 WSGI_APPLICATION = 'dish_composer.wsgi.application'
 
