@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy import signals
+from scrapy_aizel_scrapper.settings import ITEM_BULK_SIZE
 from scrapy_aizel import tasks
 
 
@@ -17,7 +18,7 @@ class ScrapyParsePipeline(object):
     def process_item(self, item, spider):
         # print(spider)
         self.items.append(dict(item))  # since object of type'AizelClothItem' is not json serializable
-        if len(self.items) >= 5:
+        if len(self.items) >= ITEM_BULK_SIZE:
             self.handle_list_of_items()
         return item
 

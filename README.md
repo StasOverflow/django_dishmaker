@@ -69,3 +69,13 @@ $ docker-compose up
     $ redis-cli lpush aizel:start_urls "https://aizel.ru/ua-ru/odezhda/bryuki/"
 
 ####Or it can be integrated with django app
+
+#####DONT FORGET TO SETUP ENV VARIABLES!!
+
+
+    $ . .env-non-docker
+
+ - run celery in a separate terminal:
+
+
+    $  celery -A dishmaker worker --loglevel=info -B

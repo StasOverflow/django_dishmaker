@@ -1,6 +1,7 @@
 import scrapy
 from scrapy_aizel_scrapper.items import AizelClothItem
 from scrapy_redis.spiders import RedisSpider
+from scrapy_aizel_scrapper.settings import SPIDER_QUICK_MODE
 
 
 # start_urls = ("https://aizel.ru/ua-ru/odezhda/bryuki/", )
@@ -23,9 +24,8 @@ class AizelClothSpider(RedisSpider):
         url_list = [
             response.urljoin(link[:-2] + str(x+1)) for x in range(int(last_page))
         ]
-        # uncomment to shorten list of parsed links
-        url_list = url_list[4:7]
-        # print(url_list)
+        if SPIDER_QUICK_MODE:
+            url_list = url_list[4:7]
         for index, link in enumerate(url_list):
             yield scrapy.Request(url_list[index], self.parse_cloth_list)
 
@@ -35,8 +35,8 @@ class AizelClothSpider(RedisSpider):
                                          'a[contains(@class, "product__desc__name")]/'
                                          '@href').getall()
 
-        # uncomment to shorten list of parsed links
-        cloth_link_list = cloth_link_list[1:5]
+        if SPIDER_QUICK_MODE:
+            cloth_link_list = cloth_link_list[1:5]
         for index, link in enumerate(cloth_link_list):
             item_id = link.split('-')[-1].strip('/')
             yield scrapy.Request(response.urljoin(link), self.parse_cloth_fields, meta={'item_id': item_id})

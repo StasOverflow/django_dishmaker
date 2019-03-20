@@ -14,6 +14,11 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dish_composer.settings')
 django.setup()
 
+# Quanitity of items to be collected before trasfering to database
+ITEM_BULK_SIZE = 20
+
+# Set to True if you want to check spider's workability (parse less than 50 pages, instead of over 500)
+SPIDER_QUICK_MODE = True
 
 BOT_NAME = 'scrapy_aizel_scrapper'
 
