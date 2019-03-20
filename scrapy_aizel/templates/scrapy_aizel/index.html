@@ -4,6 +4,16 @@
     <div class="container">
         <div class="title">
              Hyello
+            {% if request.method == 'GET' %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Start scrapying Aizel">
+            </form>
+            {% elif request.method == 'POST' %}
+            <div>
+                Scrapping ongoing
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

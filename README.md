@@ -51,3 +51,21 @@ To create dev server image (with empty postgres db):
 $ docker-compose build
 $ docker-compose up
 ~~~
+------
+####Spider can be started explicitly by 
+ - navigating to (in a separate terminal): 
+  
+    
+    $ <core_folder>/scrapy_aizel/scrapy_aizel_aizel_scrapper/'
+      
+ - running the following:
+
+    
+    $ scrapy crawl aizel
+    
+ - and sending comand via redis (in another terminal):
+
+ 
+    $ redis-cli lpush aizel:start_urls "https://aizel.ru/ua-ru/odezhda/bryuki/"
+
+####Or it can be integrated with django app
