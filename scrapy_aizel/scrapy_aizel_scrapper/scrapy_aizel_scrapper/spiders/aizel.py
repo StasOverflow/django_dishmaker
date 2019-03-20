@@ -54,16 +54,31 @@ class AizelClothSpider(RedisSpider):
         size_request_url = self.size_base_url + response.meta['item_id'] + '/'
         return scrapy.Request(size_request_url, self.parse_cloth_item_with_size, meta=meta_dict)
 
-    def parse_cloth_item_with_size(self, response):
+    def price_get(self, response):
+        price_string = ''
+        price_string_list = response.meta['price'].rstrip(' ').split(' ')
+        for digit in price_string_list:
+            price_string += digit
+        return int(price_string)
 
+    def image_get(self, response):
+        return response.urljoin(response.meta['image'])
+
+    def sizes_get(self, response):
+        return response.xpath('//ul[contains(@class, "size__list")]//'
+                              'span[@class="product-size-title"]/text()').getall()
+
+    def color_get(self, response):
+        return response.meta['color'].rstrip(' ').split(' ')[-1]
+
+    def parse_cloth_item_with_size(self, response):
         fields_item = AizelClothItem()
         fields_item['brand'] = response.meta['brand']
         fields_item['title'] = response.meta['title']
-        fields_item['image'] = response.urljoin(response.meta['image'])
-        fields_item['price'] = response.meta['price']
-        fields_item['size'] = response.xpath('//ul[contains(@class, "size__list")]//'
-                                             'span[@class="product-size-title"]/text()').getall()
+        fields_item['image'] = self.image_get(response)
+        fields_item['price'] = self.price_get(response)
+        fields_item['size'] = self.sizes_get(response)
         fields_item['descr'] = response.meta['descr']
-        fields_item['color'] = response.meta['color'].rstrip(' ').split(' ')[-1]
+        fields_item['color'] = self.color_get(response)
         self.item_count += 1
         return fields_item
