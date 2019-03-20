@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy import signals
+from scrapy_aizel import tasks
 
 
 class ScrapyParsePipeline(object):
@@ -23,6 +24,7 @@ class ScrapyParsePipeline(object):
     def handle_list_of_items(self):
         if len(self.items):
             print('now i have to save some items ', len(self.items))
+            # tasks.multiply.delay(3, 6)
             self.items = list()
 
     @classmethod

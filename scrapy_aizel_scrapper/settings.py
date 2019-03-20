@@ -8,6 +8,14 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dish_composer.settings')
+django.setup()
+
+# application = get_wsgi_application()
+
 
 BOT_NAME = 'scrapy_aizel_scrapper'
 

@@ -56,7 +56,7 @@ $ docker-compose up
  - navigating to (in a separate terminal): 
   
     
-    $ <core_folder>/scrapy_aizel/scrapy_aizel_aizel_scrapper/'
+    $ scrapy_aizel_aizel_scrapper/'
       
  - running the following:
 

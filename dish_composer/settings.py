@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'notes',
     'accounts',
 
-    'channels',
+    # 'channels',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -197,13 +197,13 @@ REDIS_HOST = REDIS_ENV_HOST
 REDIS_PORT = REDIS_ENV_PORT
 
 # CELERY STUFF
-BROKER_URL = 'redis://' + REDIS_HOST
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/1'
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/1'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Oslo'
-
+print(BROKER_URL)
 
 # try:
 #     from .settings_local import *
