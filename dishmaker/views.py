@@ -410,4 +410,3 @@ class OrderUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
             formset.save()
 
         return super().form_valid(form)
-

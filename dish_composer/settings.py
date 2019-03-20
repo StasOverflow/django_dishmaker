@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
+
+    'scrapy_aizel'
 ]
 
 MIDDLEWARE = [

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('notes/', include('notes.urls')),
     path('accounts/', include('accounts.urls')),
-    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth')
+    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
+    path('parser', include('scrapy_aizel.urls'))
 ]
