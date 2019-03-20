@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from dishmaker.permissions import IsOwnerOrReadOnly
+from dishmaker.permissions import IsOwnerOrReadOnly, HasToken
 from dishmaker.serializers import DishSerializer, IngredientsSerializer, OrderSerializer, NotedItemSerializer
 
 
@@ -19,7 +19,7 @@ class DishViewSet(viewsets.ModelViewSet):
     """
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
-    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated, HasToken)
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
