@@ -16,7 +16,7 @@ class ScrapyParsePipeline(object):
 
     def process_item(self, item, spider):
         # print(spider)
-        self.items.append(item)
+        self.items.append(dict(item))  # since object of type'AizelClothItem' is not json serializable
         if len(self.items) >= 5:
             self.handle_list_of_items()
         return item
@@ -24,7 +24,7 @@ class ScrapyParsePipeline(object):
     def handle_list_of_items(self):
         if len(self.items):
             print('now i have to save some items ', len(self.items))
-            # tasks.multiply.delay(3, 6)
+            tasks.items_transfer.delay(self.items)
             self.items = list()
 
     @classmethod

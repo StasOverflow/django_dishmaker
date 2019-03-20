@@ -13,6 +13,6 @@ class AizelClothItem(scrapy.Item):
     title = scrapy.Field()
     image = scrapy.Field()
     price = scrapy.Field()
-    size = scrapy.Field()
+    sizes = scrapy.Field()
     descr = scrapy.Field()
     color = scrapy.Field()

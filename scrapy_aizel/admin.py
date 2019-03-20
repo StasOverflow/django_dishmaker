@@ -7,4 +7,4 @@ from django.contrib import admin
 
 
 admin.site.register(AizelClothItem)
-# admin.site.register(Size)
+admin.site.register(Size)

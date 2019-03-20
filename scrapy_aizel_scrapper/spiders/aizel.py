@@ -77,7 +77,7 @@ class AizelClothSpider(RedisSpider):
         fields_item['title'] = response.meta['title']
         fields_item['image'] = self.image_get(response)
         fields_item['price'] = self.price_get(response)
-        fields_item['size'] = self.sizes_get(response)
+        fields_item['sizes'] = self.sizes_get(response)
         fields_item['descr'] = response.meta['descr']
         fields_item['color'] = self.color_get(response)
         self.item_count += 1

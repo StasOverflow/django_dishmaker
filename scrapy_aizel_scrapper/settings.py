@@ -14,8 +14,6 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dish_composer.settings')
 django.setup()
 
-# application = get_wsgi_application()
-
 
 BOT_NAME = 'scrapy_aizel_scrapper'
 
